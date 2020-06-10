@@ -15,6 +15,7 @@ ____
 ___
 # suffield for future
 * **multiplayer (each player competes with his friends to get the highest score)**
+* **split screen 2 players facing the CHICKENS !!**
 * **Score**
 * **connection to facebook to see who plays and their score**
 * **a mobile version since there is alot of users there (Android, IOS might have some problems but we can try)**
