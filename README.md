@@ -11,3 +11,11 @@ ____
 * **C**
 * **D**
 * **E**
+
+___
+# suffield for future
+* **multiplayer (each player competes with his friends to get the highest score)**
+* **Score**
+* **connection to facebook to see who plays and their score**
+* **a mobile version since there is alot of users there (Android, IOS might have some problems but we can try)**
+* **the release would be on itch.io as we can make it bought or free with donation ability also no money we have to pay unlike steam**
