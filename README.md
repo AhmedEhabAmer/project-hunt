@@ -10,7 +10,7 @@ ____
 * **Game not so hard**
 * **Finish it less than one month**
 * **Make sure the prototype is funny**
-* **Let some people from the comunnity test the game before start the devolpment level**
+* **Let some people from the community test the game before start the devolpment level**
 ___
 # suffield for future
 * **multiplayer (each player competes with his friends to get the highest score)**
