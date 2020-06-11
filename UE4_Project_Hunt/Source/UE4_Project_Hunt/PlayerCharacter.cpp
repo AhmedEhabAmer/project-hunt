@@ -1,10 +1,14 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
+#include "Kismet/KismetMathLibrary.h"
+#include "TimerManager.h"
+#include "Components/TimelineComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "PlayerCharacter.h"
+#include "GameFramework/Actor.h"
+class AActor;
 
 // Sets default values
 APlayerCharacter::APlayerCharacter()
@@ -29,6 +33,10 @@ void APlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	FullHealth = 100.f;
+	Health = FullHealth;
+	HealthPrecentage = 1.f;
+	bCanBeDamaged = true;
 }
 
 // Called every frame
@@ -36,6 +44,54 @@ void APlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	GetHealth();
+}
+
+float APlayerCharacter::GetHealth()
+{
+	return HealthPrecentage;
+}
+
+FText APlayerCharacter::GetHealthInText()
+{
+	int32 HP = FMath::RoundHalfFromZero(HealthPrecentage * 100);
+	FString HPS = FString::FromInt(HP);
+	FString HealthHUD = HPS + FString(TEXT("%"));
+	FText HPText = FText::FromString(HealthHUD);
+	return HPText;
+}
+
+void APlayerCharacter::SetDamageState()
+{
+	bCanBeDamaged = true;
+}
+
+bool APlayerCharacter::bPlayerFlash()
+{
+	return false;
+}
+
+void APlayerCharacter::DamageTimer()
+{
+	GetWorldTimerManager().SetTimer(MemberTimerHandle, this,
+		&APlayerCharacter::SetDamageState, 2.0f, false);
+}
+
+float APlayerCharacter::RecivePointDamage(float DamageAmont, const UDamageType* DamageType, FVector HitLocation,
+	FVector HitNormal, UPrimitiveComponent* HitComponent, FName BoneName, FVector ShotFromDirection,
+	AController* InstigatedBy, AActor* DamageCauser, const FHitResult& HitInfo)
+{
+	bCanBeDamaged = false;
+	UpdateHealth(-DamageAmont);
+	DamageTimer();
+	return DamageAmont;
+}
+
+void APlayerCharacter::UpdateHealth(float HealthChange)
+{
+	Health += HealthChange;
+	Health = FMath::Clamp(Health, 0.0f, FullHealth);
+	HealthPrecentage = Health/FullHealth;
 }
 
 void APlayerCharacter::MoveForward(float Value)
