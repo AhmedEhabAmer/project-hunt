@@ -52,7 +52,7 @@ void ADamageActor::ApplyDamage()
 {
 	if (bCanBeDamaged)
 	{
-		UGameplayStatics::ApplyPointDamage(MyCharacter, DamageAmont, GetActorLocation(),
+		UGameplayStatics::ApplyPointDamage(MyCharacter, 20.f, GetActorLocation(),
 		MyHit, nullptr, this, FireDamageType);
 	}
 }
