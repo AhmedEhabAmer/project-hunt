@@ -6,6 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "DamageActor.generated.h"
 
+class UBoxComponent;
+
 UCLASS()
 class UE4_PROJECT_HUNT_API ADamageActor : public AActor
 {
@@ -54,7 +56,4 @@ public:
 
 	UFUNCTION()
 		void ApplyDamage();
-
-	
-
 };

@@ -16,7 +16,7 @@ ADamageActor::ADamageActor()
 	MyBoxComponent->InitBoxExtent(BoxSize);
 	RootComponent = MyBoxComponent;
 
-	Particle = CreateDefaultSubobject<UPrimitiveComponent>("Particle");
+	Particle = CreateDefaultSubobject<UParticleSystemComponent>("Particle");
 	Particle->SetRelativeLocation(FVector(0.f, 0.f, 0.f));
 	Particle->SetupAttachment(RootComponent);
 
@@ -37,7 +37,7 @@ void ADamageActor::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, cla
 		bCanBeDamaged = true;
 		MyCharacter = Cast<AActor>(OtherActor);
 		MyHit = SweepResult;
-		GetWorldTimerManager().SetTimer(DamageTimerHandle, this, &ADamageActor::ApplyFireDamage, 2.2f,
+		GetWorldTimerManager().SetTimer(DamageTimerHandle, this, &ADamageActor::ApplyDamage, 2.2f,
 		true, 0.0f);
 	}
 }
@@ -53,6 +53,6 @@ void ADamageActor::ApplyDamage()
 	if (bCanBeDamaged)
 	{
 		UGameplayStatics::ApplyPointDamage(MyCharacter, DamageAmont, GetActorLocation(),
-		MyHit, nullptr, this, FireDamageType)
+		MyHit, nullptr, this, FireDamageType);
 	}
 }
