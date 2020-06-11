@@ -6,12 +6,11 @@ in a dark world without no light you are the only light source .. hunted by the 
 ____
 # Prototype Goals
 
-* **A**
-* **B**
-* **C**
-* **D**
-* **E**
-
+* **Funny Gameplay**
+* **Game not so hard**
+* **Finish it less than one month**
+* **Make sure the prototype is funny**
+* **Let some people from the comunnity test the game before start the devolpment level**
 ___
 # suffield for future
 * **multiplayer (each player competes with his friends to get the highest score)**
