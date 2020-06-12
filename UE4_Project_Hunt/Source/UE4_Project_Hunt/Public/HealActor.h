@@ -7,6 +7,8 @@
 #include "PlayerCharacter.h"
 #include "HealActor.generated.h"
 
+class UStaticMeshComponent;
+
 UCLASS()
 class UE4_PROJECT_HUNT_API AHealActor : public AActor
 {
@@ -18,6 +20,10 @@ public:
 
 public:
 	
+	UPROPERTY(EditAnywhere, Category = "Static Mesh")
+	UStaticMeshComponent* HealingMesh;
+
+
 	UFUNCTION()
 	void OnOverlap(AActor* MyOverlappedActor, AActor* OtherActor);
 

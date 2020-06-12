@@ -2,10 +2,13 @@
 
 
 #include "HealActor.h"
+#include "Components/StaticMeshComponent.h"
 
 // Sets default values
 AHealActor::AHealActor()
 {
+	HealingMesh = CreateDefaultSubobject<UStaticMeshComponent>("Healing Mesh");
+	
  	OnActorBeginOverlap.AddDynamic(this, &AHealActor::OnOverlap);
 }
 

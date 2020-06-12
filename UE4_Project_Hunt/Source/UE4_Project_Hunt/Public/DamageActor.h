@@ -40,6 +40,9 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Damage")
 	float DamageAmont = 20.f;
 
+	UPROPERTY(EditAnywhere, Category = "Damage")
+	float TimeToTakeDamageInSeconds = 1.f;
+
 	bool bCanApplyDamage;
 	FTimerHandle DamageTimerHandle;
 

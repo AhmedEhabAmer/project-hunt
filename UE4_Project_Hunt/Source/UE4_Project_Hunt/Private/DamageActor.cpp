@@ -37,7 +37,7 @@ void ADamageActor::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, cla
 		bCanBeDamaged = true;
 		MyCharacter = Cast<AActor>(OtherActor);
 		MyHit = SweepResult;
-		GetWorldTimerManager().SetTimer(DamageTimerHandle, this, &ADamageActor::ApplyDamage, 2.2f,
+		GetWorldTimerManager().SetTimer(DamageTimerHandle, this, &ADamageActor::ApplyDamage, TimeToTakeDamageInSeconds,
 		true, 0.0f);
 	}
 }
@@ -52,7 +52,7 @@ void ADamageActor::ApplyDamage()
 {
 	if (bCanBeDamaged)
 	{
-		UGameplayStatics::ApplyPointDamage(MyCharacter, 20.f, GetActorLocation(),
+		UGameplayStatics::ApplyPointDamage(MyCharacter, DamageAmont, GetActorLocation(),
 		MyHit, nullptr, this, FireDamageType);
 	}
 }
