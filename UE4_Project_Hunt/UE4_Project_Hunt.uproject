@@ -7,10 +7,7 @@
 		{
 			"Name": "UE4_Project_Hunt",
 			"Type": "Runtime",
-			"LoadingPhase": "Default",
-			"AdditionalDependencies": [
-				"Engine"
-			]
+			"LoadingPhase": "Default"
 		}
 	]
 }
