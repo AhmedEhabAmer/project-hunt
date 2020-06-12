@@ -7,7 +7,7 @@
 APlayerHUD::APlayerHUD()
 {
 	static ConstructorHelpers::FClassFinder<UTexture2D> HealthBarObj(TEXT
-	("/Content/UI/Health_UI"));
+	("/Content/UI/Health_UI/"));
 
 	HUDWidgetClass = HealthBarObj.Class;
 }

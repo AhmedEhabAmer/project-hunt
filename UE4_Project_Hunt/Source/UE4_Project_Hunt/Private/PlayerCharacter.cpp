@@ -43,6 +43,7 @@ void APlayerCharacter::BeginPlay()
 void APlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	UE_LOG(LogTemp, Warning, TEXT("Tiking"))
 }
 
 float APlayerCharacter::GetHealth()
@@ -75,14 +76,14 @@ void APlayerCharacter::DamageTimer()
 		&APlayerCharacter::SetDamageState, 2.0f, false);
 }
 
-float APlayerCharacter::RecivePointDamage(float Damage, const class UDamageType * DamageType, FVector HitLocation, 
-			FVector HitNormal, class UPrimitiveComponent * HitComponent, FName BoneName, FVector ShotFromDirection, 
-			class AController * InstigatedBy, AActor * DamageCauser, const FHitResult & HitInfo)
+float APlayerCharacter::TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, 
+									class AController * EventInstigator, AActor * DamageCauser)
 {
 	bCanBeDamaged = false;
-	UpdateHealth(-Damage);
+	UpdateHealth(-DamageAmount);
 	DamageTimer();
-	return Damage;
+	return DamageAmount;
+	
 }
 
 void APlayerCharacter::UpdateHealth(float HealthChange)

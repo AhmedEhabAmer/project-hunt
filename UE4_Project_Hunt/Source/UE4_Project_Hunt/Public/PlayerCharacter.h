@@ -82,8 +82,7 @@ public:
 	void SetDamageState();
 
 	UFUNCTION()
-	float RecivePointDamage(float Damage, const class UDamageType * DamageType, FVector HitLocation,
-	FVector HitNormal, class UPrimitiveComponent * HitComponent, FName BoneName, FVector ShotFromDirection, 
-	class AController * InstigatedBy, AActor * DamageCauser, const FHitResult & HitInfo);
+		float TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent,
+		class AController * EventInstigator, AActor * DamageCauser);
 };
 
