@@ -8,13 +8,13 @@
 AHealActor::AHealActor()
 {
 	HealingMesh = CreateDefaultSubobject<UStaticMeshComponent>("Healing Mesh");
-	
- 	OnActorBeginOverlap.AddDynamic(this, &AHealActor::OnOverlap);
+
+	OnActorBeginOverlap.AddDynamic(this, &AHealActor::OnOverlap);
 }
 
 void AHealActor::OnOverlap(AActor* MyOverlappedActor, AActor* OtherActor)
 {
-	if ( (OtherActor != nullptr) && (OtherActor != this) )
+	if ((OtherActor != nullptr) && (OtherActor != this))
 	{
 		MyCharacter = Cast<APlayerCharacter>(OtherActor);
 

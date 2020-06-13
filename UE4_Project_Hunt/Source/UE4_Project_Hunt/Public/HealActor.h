@@ -13,24 +13,24 @@ UCLASS()
 class UE4_PROJECT_HUNT_API AHealActor : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	// Sets default values for this actor's properties
 	AHealActor();
 
 public:
-	
+
 	UPROPERTY(EditAnywhere, Category = "Static Mesh")
-	UStaticMeshComponent* HealingMesh;
+		UStaticMeshComponent* HealingMesh;
 
 
 	UFUNCTION()
-	void OnOverlap(AActor* MyOverlappedActor, AActor* OtherActor);
+		void OnOverlap(AActor* MyOverlappedActor, AActor* OtherActor);
 
 	UPROPERTY(EditAnywhere)
-	APlayerCharacter* MyCharacter;
+		APlayerCharacter* MyCharacter;
 
 	UPROPERTY(EditAnywhere)
-	int32 HealthAmmont;
+		int32 HealthAmmont;
 
 };

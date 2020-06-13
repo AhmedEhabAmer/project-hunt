@@ -1,11 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+
 #include "Kismet/GamePlayStatics.h"
 #include "GamePlayController.h"
 
 AGamePlayController::AGamePlayController()
 {
-	
+
 }
 
 void AGamePlayController::BeginPlay()
@@ -46,20 +47,20 @@ void AGamePlayController::HandleNewState(EGamePlayState NewState)
 {
 	switch (NewState)
 	{
-		case EGamePlayState::EPlying:
-		{
-			// do nothing
-		}
-		break;
+	case EGamePlayState::EPlying:
+	{
+		// do nothing
+	}
+	break;
 
-		case EGamePlayState::EGameOver:
-		{
-			UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
-		}
+	case EGamePlayState::EGameOver:
+	{
+		UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
+	}
 
-		case EGamePlayState::EUnknown:
-		{
-			// do nothing
-		}
+	case EGamePlayState::EUnknown:
+	{
+		// do nothing
+	}
 	}
 }

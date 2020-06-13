@@ -1,4 +1,5 @@
- // Fill out your copyright notice in the Description page of Project Settings.
+// Fill out your copyright notice in the Description page of Project Settings.
+
 
 
 #include "DamageActor.h"
@@ -10,8 +11,8 @@
 // Sets default values
 ADamageActor::ADamageActor()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	
+	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+
 	MyBoxComponent = CreateDefaultSubobject<UBoxComponent>("Damage Box");
 	MyBoxComponent->InitBoxExtent(BoxSize);
 	RootComponent = MyBoxComponent;
@@ -32,13 +33,13 @@ void ADamageActor::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, cla
 	class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
 	const FHitResult& SweepResult)
 {
-	if ( (OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr) )
+	if ((OtherActor != nullptr) && (OtherActor != this) && (OtherComp != nullptr))
 	{
 		bCanBeDamaged = true;
 		MyCharacter = Cast<AActor>(OtherActor);
 		MyHit = SweepResult;
 		GetWorldTimerManager().SetTimer(DamageTimerHandle, this, &ADamageActor::ApplyDamage, TimeToTakeDamageInSeconds,
-		true, 0.0f);
+			true, 0.0f);
 	}
 }
 void ADamageActor::OnOverlapEnd(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
@@ -53,6 +54,6 @@ void ADamageActor::ApplyDamage()
 	if (bCanBeDamaged)
 	{
 		UGameplayStatics::ApplyPointDamage(MyCharacter, DamageAmont, GetActorLocation(),
-		MyHit, nullptr, this, FireDamageType);
+			MyHit, nullptr, this, FireDamageType);
 	}
 }

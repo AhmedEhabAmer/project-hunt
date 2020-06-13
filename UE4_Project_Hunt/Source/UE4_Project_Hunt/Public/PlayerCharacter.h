@@ -23,7 +23,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
@@ -36,53 +36,63 @@ public:
 	// Setup player camera and mesh
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Sittings")
-	UStaticMeshComponent* PlayerMesh;
+		UStaticMeshComponent* PlayerMesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera Sittings")
-	USpringArmComponent* CameraSpringArm;
+		USpringArmComponent* CameraSpringArm;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera Sittings")
-	UCameraComponent* PlayerCamera;
+		UCameraComponent* PlayerCamera;
 
 public:
 	/*
 	* Setup the health value and make sure it is right all the time
-	* If the player take any damage the screen will flash 
-	* Setup the damage Timer and the damage state if the player take any damage 
+	* If the player take any damage the screen will flash
+	* Setup the damage Timer and the damage state if the player take any damage
 	* it appeared in the screen by the heath counter
 	*/
 
 	struct FTimerHandle MemberTimerHandle;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
-	float FullHealth;
+		float FullHealth;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
-	float Health;
+		float Health;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
-	float HealthPrecentage;
+		float HealthPrecentage;
 
 	UFUNCTION(BlueprintPure, Category = "Health")
-	float GetHealth();
-	
-	UFUNCTION(BlueprintPure, Category = "Health")
-	FText GetHealthInText();
+		float GetHealth();
 
 	UFUNCTION(BlueprintPure, Category = "Health")
-	bool bPlayerFlash();
+		FText GetHealthInText();
+
+	UFUNCTION(BlueprintPure, Category = "Health")
+		bool bPlayerFlash();
 
 	UFUNCTION(BlueprintCallable, Category = "Health")
-	void UpdateHealth(float HealthChange);
+		void UpdateHealth(float HealthChange);
 
 	UFUNCTION()
-	void DamageTimer();
+		void DamageTimer();
 
 	UFUNCTION()
-	void SetDamageState();
+		void SetDamageState();
 
 	UFUNCTION()
 		float TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent,
 		class AController * EventInstigator, AActor * DamageCauser);
-};
 
+
+	UPROPERTY(EditAnywhere, Category = "Damage")
+	float TimerPerSeconds = 1.f;
+
+	UPROPERTY(EditAnywhere, Category = "Damage")
+	float  TimerDamage = 1.f;
+
+	void TimeToTakeDamage();
+
+	FTimerHandle DamageTimerHandle;
+};

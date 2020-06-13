@@ -7,13 +7,12 @@
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "PlayerCharacter.h"
-#include "GameFramework/Actor.h"
-class AActor;
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 APlayerCharacter::APlayerCharacter()
 {
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 	// TODO change it to character
@@ -32,18 +31,29 @@ APlayerCharacter::APlayerCharacter()
 void APlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 	FullHealth = 100.f;
 	Health = FullHealth;
 	HealthPrecentage = 1.f;
 	bCanBeDamaged = true;
+
+	GetWorldTimerManager().SetTimer(MemberTimerHandle, this,
+		&APlayerCharacter::TimeToTakeDamage, TimerPerSeconds, true);
+
 }
 
 // Called every frame
 void APlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	UE_LOG(LogTemp, Warning, TEXT("Tiking"))
+	
+	
+}
+
+void APlayerCharacter::TimeToTakeDamage()
+{
+	bCanBeDamaged = true;
+	UpdateHealth(-TimerDamage);
 }
 
 float APlayerCharacter::GetHealth()
@@ -76,21 +86,21 @@ void APlayerCharacter::DamageTimer()
 		&APlayerCharacter::SetDamageState, 2.0f, false);
 }
 
-float APlayerCharacter::TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, 
-									class AController * EventInstigator, AActor * DamageCauser)
+float APlayerCharacter::TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent,
+	class AController * EventInstigator, AActor * DamageCauser)
 {
 	bCanBeDamaged = false;
 	UpdateHealth(-DamageAmount);
 	DamageTimer();
 	return DamageAmount;
-	
 }
 
 void APlayerCharacter::UpdateHealth(float HealthChange)
 {
 	Health += HealthChange;
 	Health = FMath::Clamp(Health, 0.0f, FullHealth);
-	HealthPrecentage = Health/FullHealth;
+	HealthPrecentage = Health / FullHealth;
+
 }
 
 void APlayerCharacter::MoveForward(float Value)
@@ -125,4 +135,3 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
 	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
 }
-
