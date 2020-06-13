@@ -32,22 +32,32 @@ public:
 
 	void MoveForward(float Value);
 	void MoveRight(float Value);
+	void LookUpRate(float Value);
+	void TrunRate(float Value);
 
-	// Setup player camera and mesh
+	/*Setup player camera and mesh
+	* Setup the base for the controller
+	*/
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Sittings")
-		UStaticMeshComponent* PlayerMesh;
+	UStaticMeshComponent* PlayerMesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera Sittings")
-		USpringArmComponent* CameraSpringArm;
+	USpringArmComponent* CameraSpringArm;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera Sittings")
-		UCameraComponent* PlayerCamera;
+	UCameraComponent* PlayerCamera;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Controller")
+	float BaseLookUpRate;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Controller")
+	float BaseTurnRate;
 
 public:
 	/*
 	* Setup the health value and make sure it is right all the time
-	* If the player take any damage the screen will flash
+	* TODO If the player take any damage the screen will flash
 	* Setup the damage Timer and the damage state if the player take any damage
 	* it appeared in the screen by the heath counter
 	*/
@@ -86,6 +96,11 @@ public:
 		class AController * EventInstigator, AActor * DamageCauser);
 
 
+	/*
+	* this is for the damage functuon
+	* The timer handle for make the time running well
+	* the timer per sec and damage you can edit it from the BP not need to open the code for it 
+	*/
 	UPROPERTY(EditAnywhere, Category = "Damage")
 	float TimerPerSeconds = 1.f;
 
