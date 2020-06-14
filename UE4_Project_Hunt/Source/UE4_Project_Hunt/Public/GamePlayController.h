@@ -37,7 +37,7 @@ public:
 		EGamePlayState GetCurrentState() const;
 
 	void SetCurrentState(EGamePlayState NewState);
-
+	c
 private:
 
 	EGamePlayState CurrentState;
