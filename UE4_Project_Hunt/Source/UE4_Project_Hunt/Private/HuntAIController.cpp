@@ -24,6 +24,13 @@ void AHuntAIController::BeginPlay()
 	}
 }
 
+void AHuntAIController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	
+}
+
+
 APlayerCharacter* AHuntAIController::GetPlayer() const 
 {
 	auto PlayerPawn = GetWorld()->GetFirstPlayerController()->GetPawn();

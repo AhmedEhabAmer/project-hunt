@@ -37,9 +37,8 @@ public:
 		EGamePlayState GetCurrentState() const;
 
 	void SetCurrentState(EGamePlayState NewState);
-
+	
 	APlayerCharacter* GetPlayerController();
-
 
 private:
 
@@ -47,20 +46,5 @@ private:
 
 	void HandleNewState(EGamePlayState NewState);
 
-	void AimTowrdsCrosshir();
 
-	bool GetLookVectorHitLocation(FVector HitDirection, FVector& HitLocation) const;
-
-	bool GetSightRayHitLocation(FVector& HitLocation) const;
-
-	bool GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const;
-
-	UPROPERTY(EditAnywhere, Category = "Line-Trace")
-	float LineTraceRange;
-
-	UPROPERTY(EditAnywhere, Category = "Line-Trace")
-	float CrosshairXLocation;
-	
-	UPROPERTY(EditAnywhere, Category = "Line-Trace")
-	float CrosshairYLocation;
 };

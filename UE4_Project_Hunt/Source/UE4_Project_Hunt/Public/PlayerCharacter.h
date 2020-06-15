@@ -54,6 +54,8 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = "Controller")
 	float BaseTurnRate;
 
+	void AimAt(FVector HitLocation);
+
 public:
 	/*
 	* Setup the health value and make sure it is right all the time
@@ -96,8 +98,9 @@ public:
 		class AController * EventInstigator, AActor * DamageCauser);
 
 
+private:
 	/*
-	* this is for the damage functuon
+	* this is for the damage function
 	* The timer handle for make the time running well
 	* the timer per sec and damage you can edit it from the BP not need to open the code for it 
 	*/
