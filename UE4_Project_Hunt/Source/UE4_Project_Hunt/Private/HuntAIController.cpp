@@ -2,43 +2,21 @@
 
 
 #include "HuntAIController.h"
+#include "HuntAICharacter.h"
+#include "AITargetPoint.h"
+#include "BeHaviorTree/BehaviorTree.h"
+#include "BeHaviorTree/BlackBoardComponent.h"
+#include "BeHaviorTree/BehaviorTreeComponent.h"
 
 AHuntAIController::AHuntAIController()
 {
 
 }
 
-void AHuntAIController::BeginPlay()
+void AHuntAIController::OnPossess(APawn* InPawn)
 {
-	Super::BeginPlay();
+	Super::Possess(InPawn);
 
-	auto AIController = GetController();
-	auto AIFoundPlayer = GetPlayer();
-	if (!AIFoundPlayer)
-	{
-		UE_LOG(LogTemp, Error, TEXT("AiController not possisng a tank"))
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("AiController is possisng %s"), *(GetPlayer()->GetName()))
-	}
-}
-
-void AHuntAIController::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-	
 }
 
 
-APlayerCharacter* AHuntAIController::GetPlayer() const 
-{
-	auto PlayerPawn = GetWorld()->GetFirstPlayerController()->GetPawn();
-	if (!PlayerPawn) {return nullptr;}
-	return Cast<APlayerCharacter>(PlayerPawn);
-}
-
-APlayerCharacter * AHuntAIController::GetController() const
-{
-	return Cast<APlayerCharacter>(GetPawn());
-}

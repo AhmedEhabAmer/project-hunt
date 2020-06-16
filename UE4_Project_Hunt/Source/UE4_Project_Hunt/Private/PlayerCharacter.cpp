@@ -56,8 +56,6 @@ void APlayerCharacter::Tick(float DeltaTime)
 	
 }
 
-
-
 /*The player take damage every X second BP can edit that*/
 void APlayerCharacter::TimeToTakeDamage()
 {

@@ -6,6 +6,8 @@
 #include "AIController.h"
 #include "PlayerCharacter.h"
 #include "HuntAIController.generated.h"
+class UBehaviorTreeComponent;
+
 
 /**
  * 
@@ -16,16 +18,28 @@ class UE4_PROJECT_HUNT_API AHuntAIController : public AAIController
 	GENERATED_BODY()
 	
 public:
+	/*Our Behavior tree*/
+	UBehaviorTreeComponent* BehavirorTree;
+
+	/*Our blackboard component*/
+	UBlackboardComponent* BlackBoardComp;
+
+	/*BlackBoard Keys*/
+	UPROPERTY(EditDefaultsOnly, Category = "AI")
+	FName LocationToGoKeys;
+
+	UPROPERTY(EditDefaultsOnly, Category = "AI")
+	FName PlayerKeys;
+
+	TArray<AActor*> PatrolPoints;
+
+	virtual void OnPossess(APawn* InPawn) override;
+
+public:
 	
 	AHuntAIController();
 
-	virtual void BeginPlay() override;
-
-	virtual void Tick(float DeltaTime) override;
-
-public:
-
-	APlayerCharacter* GetController() const;
-
-	APlayerCharacter* GetPlayer() const;
+	/*Inline gritter functions*/
+	FORCEINLINE UBlackboardComponent* GetBlackBoardComp() const {return BlackBoardComp;}
+	FORCEINLINE TArray<AActor*> GetPatrolPoints() const {return PatrolPoints;}
 };
