@@ -78,7 +78,6 @@ FText APlayerCharacter::GetHealthInText()
 	return HPText;
 }
 
-
 void APlayerCharacter::SetDamageState()
 {
 	bCanBeDamaged = true;
