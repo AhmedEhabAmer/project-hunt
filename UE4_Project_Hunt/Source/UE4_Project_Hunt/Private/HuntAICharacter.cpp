@@ -6,6 +6,8 @@
 // Sets default values
 AHuntAICharacter::AHuntAICharacter()
 {
+ 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	PrimaryActorTick.bCanEverTick = true;
 
 }
 
@@ -14,6 +16,13 @@ void AHuntAICharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+}
+
+// Called every frame
+void AHuntAICharacter::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
 }
 
 // Called to bind functionality to input

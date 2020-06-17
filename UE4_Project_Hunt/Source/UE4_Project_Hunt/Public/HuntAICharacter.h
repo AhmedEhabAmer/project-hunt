@@ -20,10 +20,9 @@ protected:
 	virtual void BeginPlay() override;
 
 public:	
-	
-	UPROPERTY(EditAnywhere, Category = "AI")
-	class UBehaviorTree* BehaviorTree;
-	
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
