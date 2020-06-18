@@ -1,8 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "GamePlayController.h"
 #include "Kismet/GamePlayStatics.h"
 #include "DrawDebugHelpers.h"
-#include "GamePlayController.h"
 
 AGamePlayController::AGamePlayController()
 {
