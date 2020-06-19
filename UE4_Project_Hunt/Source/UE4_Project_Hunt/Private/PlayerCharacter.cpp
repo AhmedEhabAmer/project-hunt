@@ -19,8 +19,8 @@ APlayerCharacter::APlayerCharacter()
 	* define the meshes and the spring arm and the camera
 	* attach it to the root (player capsule)
 	*/
-	PlayerMesh = CreateDefaultSubobject<UStaticMeshComponent>("Player Character");
-	PlayerMesh->SetupAttachment(RootComponent);
+	/*PlayerMesh = CreateDefaultSubobject<UStaticMeshComponent>("Player Character");
+	PlayerMesh->SetupAttachment(RootComponent);*/
 
 	CameraSpringArm = CreateDefaultSubobject<USpringArmComponent>("Camera SpringArm");
 	CameraSpringArm->SetupAttachment(RootComponent);
