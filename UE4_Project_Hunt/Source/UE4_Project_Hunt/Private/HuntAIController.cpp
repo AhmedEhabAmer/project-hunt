@@ -22,8 +22,9 @@ AHuntAIController::AHuntAIController()
 	CurrentPatrolPoint = 0;
 }
 
-void AHuntAIController::OnPossess(APawn* InPawn)
+void AHuntAIController::OnPossess(APawn * InPawn)
 {
+	Super::OnPossess(InPawn);
 
 	/*Get Reference to the character*/
 	AHuntAICharacter* AICharacter = Cast<AHuntAICharacter>(InPawn);
