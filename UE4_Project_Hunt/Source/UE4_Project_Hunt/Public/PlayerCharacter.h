@@ -54,8 +54,6 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = "Controller")
 		float BaseTurnRate;
 
-	void AimAt(FVector HitLocation);
-
 public:
 	/*
 	* Setup the health value and make sure it is right all the time
@@ -111,6 +109,8 @@ private:
 		float  TimerDamage = 1.f;
 
 	void TimeToTakeDamage();
+
+	void StartTimer();
 
 	FTimerHandle DamageTimerHandle;
 };
