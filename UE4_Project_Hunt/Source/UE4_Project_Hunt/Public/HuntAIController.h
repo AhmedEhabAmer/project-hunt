@@ -4,10 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "AIController.h"
-#include "PlayerCharacter.h"
 #include "HuntAIController.generated.h"
-class UBehaviorTreeComponent;
-
 
 /**
  * 
@@ -18,28 +15,41 @@ class UE4_PROJECT_HUNT_API AHuntAIController : public AAIController
 	GENERATED_BODY()
 	
 public:
-	/*Our Behavior tree*/
-	UBehaviorTreeComponent* BehavirorTree;
+
+	/*Our Behavior tree component*/
+	class UBehaviorTreeComponent* BehaviorTreeComp;
 
 	/*Our blackboard component*/
 	UBlackboardComponent* BlackBoardComp;
 
-	/*BlackBoard Keys*/
-	UPROPERTY(EditDefaultsOnly, Category = "AI")
-	FName LocationToGoKeys;
+	/*Backboard keys*/
+	UPROPERTY(EditDefaultsOnly, Category = AI)
+	FName LocationToGo;
 
-	UPROPERTY(EditDefaultsOnly, Category = "AI")
-	FName PlayerKeys;
+	UPROPERTY(EditDefaultsOnly, Category = AI)
+	FName PlayerKey;
 
-	TArray<AActor*> PatrolPoints;
+	/*
+	*this array to store all the patrol points 
+	*and let us use it instead of using Actors around the level
+	*by taking all the actors array and store it the target point
+	*and find the next target to walk to
+	*/
+	TArray<AActor*> PatrolPoint;
 
+	/*This function calls when we start posses a pawn*/
 	virtual void OnPossess(APawn* InPawn) override;
 
+	int32 CurrentPatrolPoint;
+
 public:
-	
+
 	AHuntAIController();
 
-	/*Inline gritter functions*/
-	FORCEINLINE UBlackboardComponent* GetBlackBoardComp() const {return BlackBoardComp;}
-	FORCEINLINE TArray<AActor*> GetPatrolPoints() const {return PatrolPoints;}
+	/*When Ai catch the player this function will called*/
+	void SetPlayerCaught(APawn* InPawn);
+
+	/*Inline getter functions*/
+	FORCEINLINE UBlackboardComponent* GetBalckBoardComp() const { return BlackBoardComp; }
+	FORCEINLINE TArray<AActor*> GetPatrolPont() const { return PatrolPoint; }
 };

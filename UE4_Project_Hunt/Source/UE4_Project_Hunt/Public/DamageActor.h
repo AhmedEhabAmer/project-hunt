@@ -49,13 +49,13 @@ public:
 	// declare component overlap begin function
 	UFUNCTION()
 		void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
-					class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
-					const FHitResult& SweepResult);
+			class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
+			const FHitResult& SweepResult);
 
 	// declare component overlap end function
 	UFUNCTION()
 		void OnOverlapEnd(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
-						  class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+			class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
 	UFUNCTION()
 		void ApplyDamage();

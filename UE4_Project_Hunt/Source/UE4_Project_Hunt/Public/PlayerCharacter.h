@@ -40,19 +40,19 @@ public:
 	*/
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Sittings")
-	UStaticMeshComponent* PlayerMesh;
+		UStaticMeshComponent* PlayerMesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera Sittings")
-	USpringArmComponent* CameraSpringArm;
+		USpringArmComponent* CameraSpringArm;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera Sittings")
-	UCameraComponent* PlayerCamera;
+		UCameraComponent* PlayerCamera;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Controller")
-	float BaseLookUpRate;
+		float BaseLookUpRate;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Controller")
-	float BaseTurnRate;
+		float BaseTurnRate;
 
 	void AimAt(FVector HitLocation);
 
@@ -95,20 +95,20 @@ public:
 
 	UFUNCTION()
 		float TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent,
-		class AController * EventInstigator, AActor * DamageCauser);
+			class AController * EventInstigator, AActor * DamageCauser);
 
 
 private:
 	/*
 	* this is for the damage function
 	* The timer handle for make the time running well
-	* the timer per sec and damage you can edit it from the BP not need to open the code for it 
+	* the timer per sec and damage you can edit it from the BP not need to open the code for it
 	*/
 	UPROPERTY(EditAnywhere, Category = "Damage")
-	float TimerPerSeconds = 1.f;
+		float TimerPerSeconds = 1.f;
 
 	UPROPERTY(EditAnywhere, Category = "Damage")
-	float  TimerDamage = 1.f;
+		float  TimerDamage = 1.f;
 
 	void TimeToTakeDamage();
 

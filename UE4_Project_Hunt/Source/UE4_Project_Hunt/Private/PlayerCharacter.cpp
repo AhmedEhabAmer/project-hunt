@@ -30,7 +30,7 @@ APlayerCharacter::APlayerCharacter()
 	PlayerCamera->SetupAttachment(CameraSpringArm);
 
 	/*Setup the base for the controller BP can edit*/
-	BaseTurnRate =  0.45;
+	BaseTurnRate = 0.45;
 	BaseLookUpRate = 0.45;
 }
 
@@ -53,7 +53,7 @@ void APlayerCharacter::BeginPlay()
 void APlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	
+
 }
 
 /*The player take damage every X second BP can edit that*/
@@ -77,7 +77,6 @@ FText APlayerCharacter::GetHealthInText()
 	FText HPText = FText::FromString(HealthHUD);
 	return HPText;
 }
-
 
 void APlayerCharacter::SetDamageState()
 {
@@ -163,7 +162,7 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 	PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
 	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
-	
+
 	PlayerInputComponent->BindAxis("TurnRate", this, &APlayerCharacter::TrunRate);
 	PlayerInputComponent->BindAxis("LookUpRate", this, &APlayerCharacter::LookUpRate);
 }
