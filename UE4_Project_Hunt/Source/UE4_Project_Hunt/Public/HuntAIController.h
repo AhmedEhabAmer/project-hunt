@@ -40,11 +40,13 @@ public:
 	/*This function calls when we start posses a pawn*/
 	virtual void OnPossess(APawn* InPawn) override;
 
-	int32 CurrentPatrolPoint;
+	
 
 public:
 
 	AHuntAIController();
+
+	int32 CurrentPatrolPoint;
 
 	/*When Ai catch the player this function will called*/
 	void SetPlayerCaught(APawn* InPawn);

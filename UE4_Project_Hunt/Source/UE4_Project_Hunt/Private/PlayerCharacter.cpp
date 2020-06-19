@@ -1,12 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "PlayerCharacter.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "TimerManager.h"
 #include "Components/TimelineComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
-#include "PlayerCharacter.h"
 #include "Kismet/GameplayStatics.h"
 
 // Sets default values
