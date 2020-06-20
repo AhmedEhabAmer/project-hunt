@@ -25,7 +25,9 @@ APlayerCharacter::APlayerCharacter()
 
 	PlayerCamera = CreateDefaultSubobject<UCameraComponent>("Player Camera");
 	PlayerCamera->SetupAttachment(CameraSpringArm);
-	PlayerCamera->SetWorldRotation(CameraRelativeRotation);
+	PlayerCamera->SetRelativeLocation(CameraRelativeLoacation);
+	PlayerCamera->SetRelativeRotation(CameraRelativeRotation);
+
 
 	/*Setup the base for the controller BP can edit*/
 	BaseTurnRate = 0.45;
