@@ -19,8 +19,8 @@ APlayerCharacter::APlayerCharacter()
 	* define the meshes and the spring arm and the camera
 	* attach it to the root (player capsule)
 	*/
-	PlayerMesh = CreateDefaultSubobject<UStaticMeshComponent>("Player Character");
-	PlayerMesh->SetupAttachment(RootComponent);
+	/*PlayerMesh = CreateDefaultSubobject<UStaticMeshComponent>("Player Character");
+	PlayerMesh->SetupAttachment(RootComponent);*/
 
 	CameraSpringArm = CreateDefaultSubobject<USpringArmComponent>("Camera SpringArm");
 	CameraSpringArm->SetupAttachment(RootComponent);
@@ -44,9 +44,7 @@ void APlayerCharacter::BeginPlay()
 	HealthPrecentage = 1.f;
 	bCanBeDamaged = true;
 
-	GetWorldTimerManager().SetTimer(MemberTimerHandle, this,
-		&APlayerCharacter::TimeToTakeDamage, TimerPerSeconds, true);
-
+	StartTimer();
 }
 
 // Called every frame
@@ -56,11 +54,18 @@ void APlayerCharacter::Tick(float DeltaTime)
 
 }
 
+ /*Call the timer to start take damage*/
+void APlayerCharacter::StartTimer()
+{
+	GetWorldTimerManager().SetTimer(MemberTimerHandle, this,
+		&APlayerCharacter::TimeToTakeDamage, TimerPerSeconds, true);
+}
+
 /*The player take damage every X second BP can edit that*/
 void APlayerCharacter::TimeToTakeDamage()
-{
-	bCanBeDamaged = true;
+{	
 	UpdateHealth(-TimerDamage);
+	StartTimer();
 }
 
 float APlayerCharacter::GetHealth()
@@ -102,6 +107,7 @@ float APlayerCharacter::TakeDamage(float DamageAmount, struct FDamageEvent const
 	bCanBeDamaged = false;
 	UpdateHealth(-DamageAmount);
 	DamageTimer();
+	TimeToTakeDamage();
 	return DamageAmount;
 }
 
