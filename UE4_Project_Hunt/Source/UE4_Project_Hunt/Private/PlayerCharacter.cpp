@@ -16,22 +16,22 @@ APlayerCharacter::APlayerCharacter()
 	PrimaryActorTick.bCanEverTick = false; // Tick function is off
 
 	/*
-	* define the meshes and the spring arm and the camera
+	* Initialize the the spring arm and the camera
 	* attach it to the root (player capsule)
 	*/
-	/*PlayerMesh = CreateDefaultSubobject<UStaticMeshComponent>("Player Character");
-	PlayerMesh->SetupAttachment(RootComponent);*/
-
 	CameraSpringArm = CreateDefaultSubobject<USpringArmComponent>("Camera SpringArm");
 	CameraSpringArm->SetupAttachment(RootComponent);
 	CameraSpringArm->bUsePawnControlRotation = true;
 
 	PlayerCamera = CreateDefaultSubobject<UCameraComponent>("Player Camera");
 	PlayerCamera->SetupAttachment(CameraSpringArm);
+	PlayerCamera->SetWorldRotation(CameraRelativeRotation);
 
 	/*Setup the base for the controller BP can edit*/
 	BaseTurnRate = 0.45;
 	BaseLookUpRate = 0.45;
+
+	Mousesensitivity = 1.f;
 }
 
 // Called when the game starts or when spawned
@@ -39,11 +39,13 @@ void APlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
+	/**Setup the Heath to be ready if damage event starts*/
 	FullHealth = 100.f;
 	Health = FullHealth;
 	HealthPrecentage = 1.f;
 	bCanBeDamaged = true;
 
+	/*Start the give damage every X second timer*/
 	StartTimer();
 }
 
@@ -51,7 +53,6 @@ void APlayerCharacter::BeginPlay()
 void APlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
  /*Call the timer to start take damage*/
@@ -100,7 +101,7 @@ void APlayerCharacter::DamageTimer()
 		&APlayerCharacter::SetDamageState, 2.0f, false);
 }
 
-/*The take damage function if the player overlap any damage actor or enimy hit this function will apply damage*/
+/*The take damage function if the player overlap any damage actor or enemy hit this function will apply damage*/
 float APlayerCharacter::TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent,
 	class AController * EventInstigator, AActor * DamageCauser)
 {
@@ -153,6 +154,21 @@ void APlayerCharacter::LookUpRate(float Value)
 	AddControllerPitchInput(Value * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
 }
 
+/**Setup mouse movement and Sensitivity*/
+void APlayerCharacter::LookUp(float AxisValue)
+{
+	float MouseSen = FMath::Clamp(Mousesensitivity, 0.f, 1.f); // Max sensitivity it (1)
+
+	AddControllerPitchInput(AxisValue * MouseSen);
+}
+
+void APlayerCharacter::Turn(float AxisValue)
+{
+	float MouseSen = FMath::Clamp(Mousesensitivity, 0.f, 1.f); // Max sensitivity it (1)
+
+	AddControllerYawInput(AxisValue * MouseSen);
+}
+
 // Called to bind functionality to input
 void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
@@ -165,10 +181,12 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	/**Setup all the Axis for the controller and the keyboard*/
 	PlayerInputComponent->BindAxis("Move Forward", this, &APlayerCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("Move Right", this, &APlayerCharacter::MoveRight);
+	
+	/**Setup the camera movement for mouse*/
+	PlayerInputComponent->BindAxis("Turn", this, &APlayerCharacter::Turn);
+	PlayerInputComponent->BindAxis("LookUp", this, &APlayerCharacter::LookUp);
 
-	PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
-	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
-
+	/**Setup the camera movement for controller*/
 	PlayerInputComponent->BindAxis("TurnRate", this, &APlayerCharacter::TrunRate);
 	PlayerInputComponent->BindAxis("LookUpRate", this, &APlayerCharacter::LookUpRate);
 }

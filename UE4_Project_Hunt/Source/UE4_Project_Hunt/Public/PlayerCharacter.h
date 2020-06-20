@@ -32,27 +32,37 @@ public:
 
 	void MoveForward(float Value);
 	void MoveRight(float Value);
-	void LookUpRate(float Value);
-	void TrunRate(float Value);
+	
 
 	/*Setup player camera and mesh
 	* Setup the base for the controller
 	*/
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Sittings")
-		UStaticMeshComponent* PlayerMesh;
+	UStaticMeshComponent* PlayerMesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera Sittings")
-		USpringArmComponent* CameraSpringArm;
+	USpringArmComponent* CameraSpringArm;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera Sittings")
-		UCameraComponent* PlayerCamera;
+	UCameraComponent* PlayerCamera;
+
+	/*Setup the base for the controller*/
+	void LookUpRate(float Value);
+	void TrunRate(float Value);
 
 	UPROPERTY(EditDefaultsOnly, Category = "Controller")
-		float BaseLookUpRate;
+	float BaseLookUpRate;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Controller")
-		float BaseTurnRate;
+	float BaseTurnRate;
+
+	/*Setup the mouse sensitivity*/
+	void LookUp(float AxisValue);
+	void Turn(float AxisValue);
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "sensitivity")
+	float Mousesensitivity;
 
 public:
 	/*
@@ -65,36 +75,42 @@ public:
 	struct FTimerHandle MemberTimerHandle;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
-		float FullHealth;
+	float FullHealth;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
-		float Health;
+	float Health;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
-		float HealthPrecentage;
+	float HealthPrecentage;
 
 	UFUNCTION(BlueprintPure, Category = "Health")
-		float GetHealth();
+	float GetHealth();
 
 	UFUNCTION(BlueprintPure, Category = "Health")
-		FText GetHealthInText();
+	FText GetHealthInText();
 
 	UFUNCTION(BlueprintPure, Category = "Health")
-		bool bPlayerFlash();
+	bool bPlayerFlash();
 
 	UFUNCTION(BlueprintCallable, Category = "Health")
-		void UpdateHealth(float HealthChange);
+	void UpdateHealth(float HealthChange);
 
 	UFUNCTION()
-		void DamageTimer();
+	void DamageTimer();
 
 	UFUNCTION()
-		void SetDamageState();
+	void SetDamageState();
 
 	UFUNCTION()
-		float TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent,
-			class AController * EventInstigator, AActor * DamageCauser);
+	float TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent,
+	class AController * EventInstigator, AActor * DamageCauser);
 
+	/*Setup the mouse Relative*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera Relative")
+	FVector CameraRelativeLoacation = FVector(0.f, 30.f, 70.f);
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera Relative")
+	FRotator CameraRelativeRotation = FRotator(0.f, 30.f, 70.f);
 
 private:
 	/*
@@ -103,10 +119,10 @@ private:
 	* the timer per sec and damage you can edit it from the BP not need to open the code for it
 	*/
 	UPROPERTY(EditAnywhere, Category = "Damage")
-		float TimerPerSeconds = 1.f;
+	float TimerPerSeconds = 1.f;
 
 	UPROPERTY(EditAnywhere, Category = "Damage")
-		float  TimerDamage = 1.f;
+	float  TimerDamage = 1.f;
 
 	void TimeToTakeDamage();
 
