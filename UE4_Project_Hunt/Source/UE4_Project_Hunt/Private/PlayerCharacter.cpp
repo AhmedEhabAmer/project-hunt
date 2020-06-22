@@ -126,6 +126,7 @@ void APlayerCharacter::UpdateHealth(float HealthChange)
 /*setup the movement*/
 void APlayerCharacter::MoveForward(float Value)
 {
+
 	const FRotator Rotation = Controller->GetControlRotation();
 	const FRotator YawRotation(0., Rotation.Yaw, 0);
 
