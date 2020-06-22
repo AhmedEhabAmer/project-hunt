@@ -8,6 +8,8 @@
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "GameFramework/Character.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 // Sets default values
 APlayerCharacter::APlayerCharacter()
@@ -33,7 +35,11 @@ APlayerCharacter::APlayerCharacter()
 	BaseTurnRate = 0.45;
 	BaseLookUpRate = 0.45;
 
+	/*Setup sensitivity for mouse BP can edit*/
 	Mousesensitivity = 1.f;
+
+	/*Setup the sprint speed*/
+	SprintSpeedMultiplier = 1.f;
 }
 
 // Called when the game starts or when spawned
@@ -143,6 +149,17 @@ void APlayerCharacter::MoveRight(float Value)
 	AddMovementInput(Direction, Value);
 }
 
+/*Setup sprint*/
+void APlayerCharacter::SprintStart()
+{
+	GetCharacterMovement()->MaxWalkSpeed *= SprintSpeedMultiplier;
+}
+
+void APlayerCharacter::SprintEnd()
+{
+	GetCharacterMovement()->MaxWalkSpeed /= SprintSpeedMultiplier;
+}
+
 /*
 * this 2 functions is only for the controller
 * you cant multiple the rate to the delta for the mouse cuz the mouse already have delta on it
@@ -180,6 +197,10 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	/**Setup the jump for the controller and the keyboard*/
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
+
+	/*Setup sprint keys*/
+	PlayerInputComponent->BindAction("Sprint", IE_Pressed, this, &APlayerCharacter::SprintStart);
+	PlayerInputComponent->BindAction("Sprint", IE_Released, this, &APlayerCharacter::SprintEnd);
 
 	/**Setup all the Axis for the controller and the keyboard*/
 	PlayerInputComponent->BindAxis("Move Forward", this, &APlayerCharacter::MoveForward);

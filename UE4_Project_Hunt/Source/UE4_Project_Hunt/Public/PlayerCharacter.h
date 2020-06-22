@@ -30,9 +30,11 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	/*Setup player movement and sprint*/
 	void MoveForward(float Value);
 	void MoveRight(float Value);
-	
+	void SprintStart();
+	void SprintEnd();
 
 	/*Setup player camera and mesh
 	* Setup the base for the controller
@@ -63,6 +65,10 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "sensitivity")
 	float Mousesensitivity;
+
+	/*Setup character speed*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Movment : Walking")
+	float SprintSpeedMultiplier;
 
 public:
 	/*
