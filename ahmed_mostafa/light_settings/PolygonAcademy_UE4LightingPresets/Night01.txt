@@ -1,0 +1,373 @@
+Begin Map
+   Begin Level
+      Begin Actor Class=/Script/Engine.LightmassImportanceVolume Name=LightmassImportanceVolume_1 Archetype=/Script/Engine.LightmassImportanceVolume'/Script/Engine.Default__LightmassImportanceVolume'
+         Begin Brush Name=Model_5
+         End Brush
+         Begin Object Class=/Script/UnrealEd.CubeBuilder Name="CubeBuilder_6"
+         End Object
+         Begin Object Class=/Script/Engine.BrushComponent Name="BrushComponent0" Archetype=BrushComponent'/Script/Engine.Default__LightmassImportanceVolume:BrushComponent0'
+            Begin Object Class=/Script/Engine.BodySetup Name="BodySetup_8"
+            End Object
+         End Object
+         Begin Object Name="CubeBuilder_6"
+            X=150.000000
+            Y=150.000000
+            Z=150.000000
+            Vertices(0)=(X=-75.000000,Y=-75.000000,Z=-75.000000)
+            Vertices(1)=(X=-75.000000,Y=-75.000000,Z=75.000000)
+            Vertices(2)=(X=-75.000000,Y=75.000000,Z=-75.000000)
+            Vertices(3)=(X=-75.000000,Y=75.000000,Z=75.000000)
+            Vertices(4)=(X=75.000000,Y=-75.000000,Z=-75.000000)
+            Vertices(5)=(X=75.000000,Y=-75.000000,Z=75.000000)
+            Vertices(6)=(X=75.000000,Y=75.000000,Z=-75.000000)
+            Vertices(7)=(X=75.000000,Y=75.000000,Z=75.000000)
+            Polys(0)=(VertexIndices=(0,1,3,2),Direction=1)
+            Polys(1)=(VertexIndices=(2,3,7,6),Direction=1)
+            Polys(2)=(VertexIndices=(6,7,5,4),Direction=1)
+            Polys(3)=(VertexIndices=(4,5,1,0),Direction=1)
+            Polys(4)=(VertexIndices=(3,1,5,7),Direction=1)
+            Polys(5)=(VertexIndices=(0,2,6,4),Direction=1)
+            Layer="Cube"
+         End Object
+         Begin Object Name="BrushComponent0"
+            Begin Object Name="BodySetup_8"
+               AggGeom=(ConvexElems=((VertexData=((X=-75.000000,Y=75.000000,Z=-75.000000),(X=-75.000000,Y=75.000000,Z=75.000000),(X=-75.000000,Y=-75.000000,Z=75.000000),(X=-75.000000,Y=-75.000000,Z=-75.000000),(X=75.000000,Y=75.000000,Z=-75.000000),(X=75.000000,Y=75.000000,Z=75.000000),(X=75.000000,Y=-75.000000,Z=-75.000000),(X=75.000000,Y=-75.000000,Z=75.000000)),ElemBox=(Min=(X=-75.000000,Y=-75.000000,Z=-75.000000),Max=(X=75.000000,Y=75.000000,Z=75.000000),IsValid=1))))
+               bGenerateMirroredCollision=False
+               CollisionTraceFlag=CTF_UseSimpleAsComplex
+            End Object
+            Brush=Model'"Model_5"'
+            BrushBodySetup=BodySetup'"BodySetup_8"'
+            RelativeLocation=(X=60.000000,Y=-2230.000000,Z=3300.000000)
+            RelativeScale3D=(X=100.000000,Y=100.000000,Z=50.000000)
+         End Object
+         BrushType=Brush_Add
+         Begin Brush Name=Model_5
+            Begin PolyList
+               Begin Polygon Link=0
+                  Origin   -00075.000000,-00075.000000,-00075.000000
+                  Normal   -00001.000000,+00000.000000,+00000.000000
+                  TextureU +00000.000000,+00001.000000,+00000.000000
+                  TextureV +00000.000000,+00000.000000,-00001.000000
+                  Vertex   -00075.000000,-00075.000000,-00075.000000
+                  Vertex   -00075.000000,-00075.000000,+00075.000000
+                  Vertex   -00075.000000,+00075.000000,+00075.000000
+                  Vertex   -00075.000000,+00075.000000,-00075.000000
+               End Polygon
+               Begin Polygon Link=1
+                  Origin   -00075.000000,+00075.000000,-00075.000000
+                  Normal   +00000.000000,+00001.000000,+00000.000000
+                  TextureU +00001.000000,-00000.000000,+00000.000000
+                  TextureV +00000.000000,+00000.000000,-00001.000000
+                  Vertex   -00075.000000,+00075.000000,-00075.000000
+                  Vertex   -00075.000000,+00075.000000,+00075.000000
+                  Vertex   +00075.000000,+00075.000000,+00075.000000
+                  Vertex   +00075.000000,+00075.000000,-00075.000000
+               End Polygon
+               Begin Polygon Link=2
+                  Origin   +00075.000000,+00075.000000,-00075.000000
+                  Normal   +00001.000000,+00000.000000,+00000.000000
+                  TextureU +00000.000000,-00001.000000,+00000.000000
+                  TextureV +00000.000000,+00000.000000,-00001.000000
+                  Vertex   +00075.000000,+00075.000000,-00075.000000
+                  Vertex   +00075.000000,+00075.000000,+00075.000000
+                  Vertex   +00075.000000,-00075.000000,+00075.000000
+                  Vertex   +00075.000000,-00075.000000,-00075.000000
+               End Polygon
+               Begin Polygon Link=3
+                  Origin   +00075.000000,-00075.000000,-00075.000000
+                  Normal   +00000.000000,-00001.000000,+00000.000000
+                  TextureU -00001.000000,-00000.000000,-00000.000000
+                  TextureV +00000.000000,+00000.000000,-00001.000000
+                  Vertex   +00075.000000,-00075.000000,-00075.000000
+                  Vertex   +00075.000000,-00075.000000,+00075.000000
+                  Vertex   -00075.000000,-00075.000000,+00075.000000
+                  Vertex   -00075.000000,-00075.000000,-00075.000000
+               End Polygon
+               Begin Polygon Link=4
+                  Origin   -00075.000000,+00075.000000,+00075.000000
+                  Normal   +00000.000000,+00000.000000,+00001.000000
+                  TextureU +00001.000000,+00000.000000,+00000.000000
+                  TextureV +00000.000000,+00001.000000,+00000.000000
+                  Vertex   -00075.000000,+00075.000000,+00075.000000
+                  Vertex   -00075.000000,-00075.000000,+00075.000000
+                  Vertex   +00075.000000,-00075.000000,+00075.000000
+                  Vertex   +00075.000000,+00075.000000,+00075.000000
+               End Polygon
+               Begin Polygon Link=5
+                  Origin   -00075.000000,-00075.000000,-00075.000000
+                  Normal   +00000.000000,+00000.000000,-00001.000000
+                  TextureU +00001.000000,+00000.000000,+00000.000000
+                  TextureV +00000.000000,-00001.000000,+00000.000000
+                  Vertex   -00075.000000,-00075.000000,-00075.000000
+                  Vertex   -00075.000000,+00075.000000,-00075.000000
+                  Vertex   +00075.000000,+00075.000000,-00075.000000
+                  Vertex   +00075.000000,-00075.000000,-00075.000000
+               End Polygon
+            End PolyList
+         End Brush
+         Brush=Model'"Model_5"'
+         BrushComponent="BrushComponent0"
+         BrushBuilder=CubeBuilder'"CubeBuilder_6"'
+         bHidden=False
+         SpawnCollisionHandlingMethod=AlwaysSpawn
+         RootComponent="BrushComponent0"
+         ActorLabel="LightmassImportanceVolume"
+         FolderPath="Lighting - Night - 01"
+         bIsEditorPreviewActor=True
+      End Actor
+      Begin Actor Class=/Engine/EngineSky/BP_Sky_Sphere.BP_Sky_Sphere_C Name=BP_Sky_Sphere_2 Archetype=/Engine/EngineSky/BP_Sky_Sphere.BP_Sky_Sphere_C'/Engine/EngineSky/BP_Sky_Sphere.Default__BP_Sky_Sphere_C'
+         Begin Object Class=/Script/Engine.StaticMeshComponent Name="Sky Sphere mesh" Archetype=StaticMeshComponent'/Engine/EngineSky/BP_Sky_Sphere.BP_Sky_Sphere_C:StaticMeshComponent_12'
+            Begin Object Class=/Script/Engine.MaterialInstanceDynamic Name="MaterialInstanceDynamic_0"
+            End Object
+         End Object
+         Begin Object Class=/Script/Engine.SceneComponent Name="Base" Archetype=SceneComponent'/Engine/EngineSky/BP_Sky_Sphere.BP_Sky_Sphere_C:SceneComponent_1'
+         End Object
+         Begin Object Name="Sky Sphere mesh"
+            Begin Object Name="MaterialInstanceDynamic_0"
+               Parent=Material'"/Engine/EngineSky/M_Sky_Panning_Clouds2.M_Sky_Panning_Clouds2"'
+               ScalarParameterValues(0)=(ParameterInfo=(Name="Horizon falloff"),ParameterValue=3.000000)
+               ScalarParameterValues(1)=(AtlasData=(bIsUsedAsAtlasPosition=True),ParameterInfo=(Name="Cloud speed"),ParameterValue=1.000000)
+               ScalarParameterValues(2)=(AtlasData=(bIsUsedAsAtlasPosition=True),ParameterInfo=(Name="Sun brightness"))
+               ScalarParameterValues(3)=(AtlasData=(bIsUsedAsAtlasPosition=True),ParameterInfo=(Name="Sun height"),ParameterValue=0.809524)
+               ScalarParameterValues(4)=(ParameterInfo=(Name="Cloud opacity"),ParameterValue=1.300000)
+               ScalarParameterValues(5)=(ParameterInfo=(Name="Stars brightness"),ParameterValue=1.500000)
+               VectorParameterValues(0)=(ParameterInfo=(Name="Light direction"),ParameterValue=(R=0.294755,G=0.000000,B=0.955573,A=1.000000))
+               VectorParameterValues(1)=(ParameterInfo=(Name="Sun color"),ParameterValue=(R=1.000000,G=0.221000,B=0.040000,A=1.000000))
+               VectorParameterValues(2)=(ParameterInfo=(Name="Horizon color"),ParameterValue=(R=0.077583,G=0.111990,B=0.135417,A=1.000000))
+               VectorParameterValues(3)=(ParameterInfo=(Name="Zenith color"),ParameterValue=(R=0.149739,G=0.175630,B=0.239583,A=1.000000))
+               VectorParameterValues(4)=(ParameterInfo=(Name="Overall color"),ParameterValue=(R=0.153460,G=0.186922,B=0.218750,A=1.000000))
+               VectorParameterValues(5)=(ParameterInfo=(Name="Cloud color"),ParameterValue=(R=0.246094,G=0.302620,B=0.375000,A=1.000000))
+               LightingGuid=140F600C471DC9DAB851B49FC872FB61
+            End Object
+            StreamingTextureData(0)=(PackedRelativeBox=4294901760,TextureLevelIndex=259,TexelFactor=1427.289063)
+            StreamingTextureData(1)=(PackedRelativeBox=4294901760,TextureLevelIndex=260,TexelFactor=21601.675781)
+            StreamingTextureData(2)=(PackedRelativeBox=4294901760,TextureLevelIndex=261,TexelFactor=10800.837891)
+            MaterialStreamingRelativeBoxes(0)=4294901760
+            OverrideMaterials(0)=MaterialInstanceDynamic'"MaterialInstanceDynamic_0"'
+            AttachParent="Base"
+            bNetAddressable=True
+            CreationMethod=SimpleConstructionScript
+            UCSModifiedProperties(0)=(MemberParent=Class'"/Script/Engine.MeshComponent"',MemberName="OverrideMaterials")
+         End Object
+         Begin Object Name="Base"
+            RelativeLocation=(X=0.000000,Y=480.000000,Z=260.000000)
+            bNetAddressable=True
+            CreationMethod=SimpleConstructionScript
+            UCSModifiedProperties(0)=(MemberParent=Class'"/Script/Engine.SceneComponent"',MemberName="RelativeLocation")
+         End Object
+         Sky Sphere mesh="Sky Sphere mesh"
+         Base="Base"
+         Sky material=MaterialInstanceDynamic'"Sky Sphere mesh.MaterialInstanceDynamic_0"'
+         Colors determined by sun position=False
+         Sun height=-0.809524
+         Sun brightness=0.000000
+         Zenith Color=(R=0.149739,G=0.175630,B=0.239583,A=1.000000)
+         Horizon color=(R=0.077583,G=0.111990,B=0.135417,A=1.000000)
+         Cloud color=(R=0.246094,G=0.302620,B=0.375000,A=1.000000)
+         Overall Color=(R=0.153460,G=0.186922,B=0.218750,A=1.000000)
+         Cloud opacity=1.300000
+         Stars brightness=1.500000
+         RootComponent="Base"
+         ActorLabel="BP_Sky_Sphere"
+         FolderPath="Lighting - Night - 01"
+         bIsEditorPreviewActor=True
+      End Actor
+      Begin Actor Class=/Script/Engine.DirectionalLight Name=DirectionalLight_1 Archetype=/Script/Engine.DirectionalLight'/Script/Engine.Default__DirectionalLight'
+         Begin Object Class=/Script/Engine.ArrowComponent Name="ArrowComponent0" Archetype=ArrowComponent'/Script/Engine.Default__DirectionalLight:ArrowComponent0'
+         End Object
+         Begin Object Class=/Script/Engine.DirectionalLightComponent Name="LightComponent0" Archetype=DirectionalLightComponent'/Script/Engine.Default__DirectionalLight:LightComponent0'
+         End Object
+         Begin Object Name="ArrowComponent0"
+            ArrowColor=(B=255,G=255,R=255,A=255)
+            AttachParent="LightComponent0"
+         End Object
+         Begin Object Name="LightComponent0"
+            bEnableLightShaftOcclusion=True
+            DynamicShadowDistanceStationaryLight=15000.000000
+            bUsedAsAtmosphereSunLight=True
+            Temperature=8500.000000
+            bUseTemperature=True
+            ShadowSharpen=0.238095
+            bEnableLightShaftBloom=True
+            BloomScale=0.010000
+            bUseRayTracedDistanceFieldShadows=True
+            LightGuid=6F85A2894728995E1EB9D5985596FE8E
+            Intensity=0.400000
+            IndirectLightingIntensity=1.500000
+            VolumetricScatteringIntensity=22.000000
+            RelativeLocation=(X=-550.000000,Y=670.000000,Z=530.000000)
+            RelativeRotation=(Pitch=-62.056389,Yaw=-281.997284,Roll=-269.613983)
+         End Object
+         ArrowComponent="ArrowComponent0"
+         LightComponent="LightComponent0"
+         SpawnCollisionHandlingMethod=AlwaysSpawn
+         RootComponent="LightComponent0"
+         ActorLabel="DirectionalLight"
+         FolderPath="Lighting - Night - 01"
+         bIsEditorPreviewActor=True
+      End Actor
+      Begin Actor Class=/Script/Engine.SkyLight Name=SkyLight_1 Archetype=/Script/Engine.SkyLight'/Script/Engine.Default__SkyLight'
+         Begin Object Class=/Script/Engine.SkyLightComponent Name="SkyLightComponent0" Archetype=SkyLightComponent'/Script/Engine.Default__SkyLight:SkyLightComponent0'
+         End Object
+         Begin Object Class=/Script/Engine.BillboardComponent Name="Sprite" Archetype=BillboardComponent'/Script/Engine.Default__SkyLight:Sprite'
+         End Object
+         Begin Object Name="SkyLightComponent0"
+            LightGuid=E368CB6E4EF3B61966FA1FA382BEB539
+            Intensity=3.300000
+            IndirectLightingIntensity=1.350000
+            RelativeLocation=(X=-10.000000,Y=560.000000,Z=150.000000)
+            Mobility=Static
+         End Object
+         Begin Object Name="Sprite"
+            AttachParent="SkyLightComponent0"
+         End Object
+         LightComponent="SkyLightComponent0"
+         SpriteComponent="Sprite"
+         RootComponent="SkyLightComponent0"
+         ActorLabel="SkyLight"
+         FolderPath="Lighting - Night - 01"
+         bIsEditorPreviewActor=True
+      End Actor
+      Begin Actor Class=/Script/Engine.PostProcessVolume Name=PostProcessVolume_3 Archetype=/Script/Engine.PostProcessVolume'/Script/Engine.Default__PostProcessVolume'
+         Begin Brush Name=Model_3
+         End Brush
+         Begin Object Class=/Script/UnrealEd.CubeBuilder Name="CubeBuilder_4"
+         End Object
+         Begin Object Class=/Script/Engine.BrushComponent Name="BrushComponent0" Archetype=BrushComponent'/Script/Engine.Default__PostProcessVolume:BrushComponent0'
+            Begin Object Class=/Script/Engine.BodySetup Name="BodySetup_6"
+            End Object
+         End Object
+         Begin Object Name="CubeBuilder_4"
+            Vertices(0)=(X=-100.000000,Y=-100.000000,Z=-100.000000)
+            Vertices(1)=(X=-100.000000,Y=-100.000000,Z=100.000000)
+            Vertices(2)=(X=-100.000000,Y=100.000000,Z=-100.000000)
+            Vertices(3)=(X=-100.000000,Y=100.000000,Z=100.000000)
+            Vertices(4)=(X=100.000000,Y=-100.000000,Z=-100.000000)
+            Vertices(5)=(X=100.000000,Y=-100.000000,Z=100.000000)
+            Vertices(6)=(X=100.000000,Y=100.000000,Z=-100.000000)
+            Vertices(7)=(X=100.000000,Y=100.000000,Z=100.000000)
+            Polys(0)=(VertexIndices=(0,1,3,2),Direction=1)
+            Polys(1)=(VertexIndices=(2,3,7,6),Direction=1)
+            Polys(2)=(VertexIndices=(6,7,5,4),Direction=1)
+            Polys(3)=(VertexIndices=(4,5,1,0),Direction=1)
+            Polys(4)=(VertexIndices=(3,1,5,7),Direction=1)
+            Polys(5)=(VertexIndices=(0,2,6,4),Direction=1)
+            Layer="Cube"
+         End Object
+         Begin Object Name="BrushComponent0"
+            Begin Object Name="BodySetup_6"
+               AggGeom=(ConvexElems=((VertexData=((X=-100.000000,Y=100.000000,Z=-100.000000),(X=-100.000000,Y=100.000000,Z=100.000000),(X=-100.000000,Y=-100.000000,Z=100.000000),(X=-100.000000,Y=-100.000000,Z=-100.000000),(X=100.000000,Y=100.000000,Z=-100.000000),(X=100.000000,Y=100.000000,Z=100.000000),(X=100.000000,Y=-100.000000,Z=-100.000000),(X=100.000000,Y=-100.000000,Z=100.000000)),ElemBox=(Min=(X=-100.000000,Y=-100.000000,Z=-100.000000),Max=(X=100.000000,Y=100.000000,Z=100.000000),IsValid=1))))
+               bGenerateMirroredCollision=False
+               CollisionTraceFlag=CTF_UseSimpleAsComplex
+            End Object
+            Brush=Model'"Model_3"'
+            BrushBodySetup=BodySetup'"BodySetup_6"'
+            BodyInstance=(MaxAngularVelocity=3599.999756)
+            RelativeLocation=(X=-530.000000,Y=650.000000,Z=119.999985)
+         End Object
+         Settings=(bOverride_WhiteTemp=True,bOverride_ColorContrast=True,bOverride_ColorGain=True,bOverride_BloomMethod=True,bOverride_BloomIntensity=True,bOverride_BloomThreshold=True,bOverride_AutoExposureMethod=True,bOverride_AutoExposureMinBrightness=True,bOverride_AutoExposureMaxBrightness=True,bOverride_LensFlareIntensity=True,bOverride_LensFlareBokehSize=True,bOverride_VignetteIntensity=True,bOverride_AmbientOcclusionIntensity=True,bOverride_AmbientOcclusionRadius=True,bOverride_DepthOfFieldFocalDistance=True,bOverride_DepthOfFieldDepthBlurRadius=True,bOverride_DepthOfFieldDepthBlurAmount=True,bOverride_DepthOfFieldMethod=True,WhiteTemp=7200.000000,ColorSaturation=(X=1.100000,Y=1.100000,Z=1.100000,W=1.000000),ColorContrast=(X=1.200000,Y=1.200000,Z=1.200000,W=1.000000),ColorGamma=(X=0.950000,Y=0.950000,Z=0.950000,W=1.000000),ColorGain=(X=1.050000,Y=1.050000,Z=1.050000,W=1.000000),ColorGammaMidtones=(X=0.900000,Y=0.900000,Z=0.900000,W=1.000000),SceneFringeIntensity=0.142857,BloomThreshold=0.000000,CameraShutterSpeed=4.000000,AutoExposureBias=-0.750000,AutoExposureMinBrightness=0.750000,LensFlareIntensity=0.500000,LensFlareBokehSize=10.000000,VignetteIntensity=0.500000,GrainJitter=1.000000,GrainIntensity=0.050000,AmbientOcclusionRadius=250.000000,DepthOfFieldMethod=DOFM_CircleDOF,DepthOfFieldDepthBlurRadius=0.200000)
+         bUnbound=True
+         BrushType=Brush_Add
+         Begin Brush Name=Model_3
+            Begin PolyList
+               Begin Polygon Link=0
+                  Origin   -00100.000000,-00100.000000,-00100.000000
+                  Normal   -00001.000000,+00000.000000,+00000.000000
+                  TextureU +00000.000000,+00001.000000,+00000.000000
+                  TextureV +00000.000000,+00000.000000,-00001.000000
+                  Vertex   -00100.000000,-00100.000000,-00100.000000
+                  Vertex   -00100.000000,-00100.000000,+00100.000000
+                  Vertex   -00100.000000,+00100.000000,+00100.000000
+                  Vertex   -00100.000000,+00100.000000,-00100.000000
+               End Polygon
+               Begin Polygon Link=1
+                  Origin   -00100.000000,+00100.000000,-00100.000000
+                  Normal   +00000.000000,+00001.000000,+00000.000000
+                  TextureU +00001.000000,-00000.000000,+00000.000000
+                  TextureV +00000.000000,+00000.000000,-00001.000000
+                  Vertex   -00100.000000,+00100.000000,-00100.000000
+                  Vertex   -00100.000000,+00100.000000,+00100.000000
+                  Vertex   +00100.000000,+00100.000000,+00100.000000
+                  Vertex   +00100.000000,+00100.000000,-00100.000000
+               End Polygon
+               Begin Polygon Link=2
+                  Origin   +00100.000000,+00100.000000,-00100.000000
+                  Normal   +00001.000000,+00000.000000,+00000.000000
+                  TextureU +00000.000000,-00001.000000,+00000.000000
+                  TextureV +00000.000000,+00000.000000,-00001.000000
+                  Vertex   +00100.000000,+00100.000000,-00100.000000
+                  Vertex   +00100.000000,+00100.000000,+00100.000000
+                  Vertex   +00100.000000,-00100.000000,+00100.000000
+                  Vertex   +00100.000000,-00100.000000,-00100.000000
+               End Polygon
+               Begin Polygon Link=3
+                  Origin   +00100.000000,-00100.000000,-00100.000000
+                  Normal   +00000.000000,-00001.000000,+00000.000000
+                  TextureU -00001.000000,-00000.000000,-00000.000000
+                  TextureV +00000.000000,+00000.000000,-00001.000000
+                  Vertex   +00100.000000,-00100.000000,-00100.000000
+                  Vertex   +00100.000000,-00100.000000,+00100.000000
+                  Vertex   -00100.000000,-00100.000000,+00100.000000
+                  Vertex   -00100.000000,-00100.000000,-00100.000000
+               End Polygon
+               Begin Polygon Link=4
+                  Origin   -00100.000000,+00100.000000,+00100.000000
+                  Normal   +00000.000000,+00000.000000,+00001.000000
+                  TextureU +00001.000000,+00000.000000,+00000.000000
+                  TextureV +00000.000000,+00001.000000,+00000.000000
+                  Vertex   -00100.000000,+00100.000000,+00100.000000
+                  Vertex   -00100.000000,-00100.000000,+00100.000000
+                  Vertex   +00100.000000,-00100.000000,+00100.000000
+                  Vertex   +00100.000000,+00100.000000,+00100.000000
+               End Polygon
+               Begin Polygon Link=5
+                  Origin   -00100.000000,-00100.000000,-00100.000000
+                  Normal   +00000.000000,+00000.000000,-00001.000000
+                  TextureU +00001.000000,+00000.000000,+00000.000000
+                  TextureV +00000.000000,-00001.000000,+00000.000000
+                  Vertex   -00100.000000,-00100.000000,-00100.000000
+                  Vertex   -00100.000000,+00100.000000,-00100.000000
+                  Vertex   +00100.000000,+00100.000000,-00100.000000
+                  Vertex   +00100.000000,-00100.000000,-00100.000000
+               End Polygon
+            End PolyList
+         End Brush
+         Brush=Model'"Model_3"'
+         BrushComponent="BrushComponent0"
+         BrushBuilder=CubeBuilder'"CubeBuilder_4"'
+         bHidden=False
+         SpawnCollisionHandlingMethod=AlwaysSpawn
+         RootComponent="BrushComponent0"
+         ActorLabel="PostProcessVolume"
+         FolderPath="Lighting - Night - 01"
+         bIsEditorPreviewActor=True
+      End Actor
+      Begin Actor Class=/Script/Engine.ExponentialHeightFog Name=ExponentialHeightFog_1 Archetype=/Script/Engine.ExponentialHeightFog'/Script/Engine.Default__ExponentialHeightFog'
+         Begin Object Class=/Script/Engine.ExponentialHeightFogComponent Name="HeightFogComponent0" Archetype=ExponentialHeightFogComponent'/Script/Engine.Default__ExponentialHeightFog:HeightFogComponent0'
+         End Object
+         Begin Object Class=/Script/Engine.BillboardComponent Name="Sprite" Archetype=BillboardComponent'/Script/Engine.Default__ExponentialHeightFog:Sprite'
+         End Object
+         Begin Object Name="HeightFogComponent0"
+            FogDensity=0.050000
+            FogInscatteringColor=(R=0.032145,G=0.048026,B=0.078125,A=1.000000)
+            FogHeightFalloff=0.286571
+            bEnableVolumetricFog=True
+            VolumetricFogScatteringDistribution=0.300000
+            VolumetricFogAlbedo=(B=202,G=164,R=160,A=255)
+            VolumetricFogDistance=5000.000000
+            RelativeLocation=(X=120.000000,Y=530.000000,Z=170.000000)
+         End Object
+         Begin Object Name="Sprite"
+            AttachParent="HeightFogComponent0"
+         End Object
+         Component="HeightFogComponent0"
+         SpriteComponent="Sprite"
+         RootComponent="HeightFogComponent0"
+         ActorLabel="ExponentialHeightFog"
+         FolderPath="Lighting - Night - 01"
+         bIsEditorPreviewActor=True
+      End Actor
+   End Level
+Begin Surface
+End Surface
+End Map
