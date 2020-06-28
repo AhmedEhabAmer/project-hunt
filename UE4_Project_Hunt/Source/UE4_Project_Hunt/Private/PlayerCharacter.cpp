@@ -10,6 +10,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Engine/Engine.h"
 
 // Sets default values
 APlayerCharacter::APlayerCharacter()
@@ -213,4 +214,24 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	/**Setup the camera movement for controller*/
 	PlayerInputComponent->BindAxis("TurnRate", this, &APlayerCharacter::TrunRate);
 	PlayerInputComponent->BindAxis("LookUpRate", this, &APlayerCharacter::LookUpRate);
+
+	/**Setup the attacking Event*/
+	PlayerInputComponent->BindAction("Attack", IE_Pressed, this,  &APlayerCharacter::AttackStart);
+	PlayerInputComponent->BindAction("Attack", IE_Released, this, &APlayerCharacter::AttackEnd);
+}
+
+void APlayerCharacter::AttackStart()
+{
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Emerald, TEXT(__FUNCTION__));
+	}
+}
+
+void APlayerCharacter::AttackEnd()
+{
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Emerald, TEXT(__FUNCTION__));
+	}
 }

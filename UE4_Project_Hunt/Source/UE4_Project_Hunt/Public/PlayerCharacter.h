@@ -71,6 +71,15 @@ public:
 	float SprintSpeedMultiplier;
 
 public:
+	/**Setup Attack event*/
+	UFUNCTION()
+	void AttackStart();
+
+	UFUNCTION()
+	void AttackEnd();
+
+
+public:
 	/*
 	* Setup the health value and make sure it is right all the time
 	* TODO If the player take any damage the screen will flash
