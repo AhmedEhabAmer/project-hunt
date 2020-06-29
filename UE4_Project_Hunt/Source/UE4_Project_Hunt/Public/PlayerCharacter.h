@@ -9,6 +9,7 @@
 class UStaticMeshComponent;
 class USpringArmComponent;
 class UCameraComponent;
+class UMaterialInstanceDynamic;
 
 UCLASS()
 class UE4_PROJECT_HUNT_API APlayerCharacter : public ACharacter
@@ -49,7 +50,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera Sittings")
 	UCameraComponent* PlayerCamera;
 
-	/*Setup the base for the controller*/
+	/**Setup the base for the controller*/
 	void LookUpRate(float Value);
 	void TrunRate(float Value);
 
@@ -66,18 +67,20 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "sensitivity")
 	float Mousesensitivity;
 
-	/*Setup character speed*/
+	/**Setup character speed*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Movment : Walking")
 	float SprintSpeedMultiplier;
 
-public:
+protected:
 	/**Setup Attack event*/
-	UFUNCTION()
 	void AttackStart();
-
-	UFUNCTION()
 	void AttackEnd();
 
+	/**Setup the attachment for the character*/
+	UPROPERTY(EditAnywhere, Category = "Attack")
+	UStaticMeshComponent* KatinaCover;
+
+	FName SocketName;
 
 public:
 	/*
@@ -117,6 +120,9 @@ public:
 	void SetDamageState();
 
 	UFUNCTION()
+	void MatUpdate(float& BlendUpdate);
+
+	UFUNCTION()
 	float TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent,
 	class AController * EventInstigator, AActor * DamageCauser);
 
@@ -144,4 +150,7 @@ private:
 	void StartTimer();
 
 	FTimerHandle DamageTimerHandle;
+
+	/**Setup material change*/
+	UMaterialInstanceDynamic* MaterialChange;
 };

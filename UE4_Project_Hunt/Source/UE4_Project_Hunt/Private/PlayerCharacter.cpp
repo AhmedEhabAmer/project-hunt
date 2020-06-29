@@ -5,12 +5,14 @@
 #include "TimerManager.h"
 #include "Components/TimelineComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Components/SkeletalMeshComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "Engine/Engine.h"
+#include "Materials/MaterialInstanceDynamic.h"
+#include "Materials/MaterialInterface.h"
 
 // Sets default values
 APlayerCharacter::APlayerCharacter()
@@ -31,7 +33,10 @@ APlayerCharacter::APlayerCharacter()
 	PlayerCamera->SetRelativeLocation(CameraRelativeLoacation);
 	PlayerCamera->SetRelativeRotation(CameraRelativeRotation);
 
-
+	/**Setup character attachment*/
+	KatinaCover = CreateDefaultSubobject<UStaticMeshComponent>("Katina Cover");
+	KatinaCover->GetAttachSocketName();
+	
 	/*Setup the base for the controller BP can edit*/
 	BaseTurnRate = 0.45;
 	BaseLookUpRate = 0.45;
@@ -41,6 +46,9 @@ APlayerCharacter::APlayerCharacter()
 
 	/*Setup the sprint speed*/
 	SprintSpeedMultiplier = 1.f;
+
+	/**IDntify objects*/
+	SocketName = "Cover";
 }
 
 // Called when the game starts or when spawned
@@ -56,6 +64,13 @@ void APlayerCharacter::BeginPlay()
 
 	/*Start the give damage every X second timer*/
 	StartTimer();
+
+	/**Setup material change*/
+	auto Char = FindComponentByClass<USkeletalMeshComponent>();
+	auto ChangeMaterial = Char->GetMaterial(1);
+
+	MaterialChange = UMaterialInstanceDynamic::Create(ChangeMaterial, NULL);
+	Char->SetMaterial(1, MaterialChange);
 }
 
 // Called every frame
@@ -124,10 +139,26 @@ float APlayerCharacter::TakeDamage(float DamageAmount, struct FDamageEvent const
 /*Update the health bar*/
 void APlayerCharacter::UpdateHealth(float HealthChange)
 {
+	/**Update health*/
 	Health += HealthChange;
 	Health = FMath::Clamp(Health, 0.0f, FullHealth);
 	HealthPrecentage = Health / FullHealth;
 
+	MatUpdate(HealthPrecentage);
+}
+
+/**Update Character Material*/
+void APlayerCharacter::MatUpdate(float& BlendUpdate)
+{
+	/**Array that Set the value of the blend Material*/
+	TArray<float> BlendValue;
+	BlendValue.SetNum(100);
+
+	for (int32 Index = 0; Index != BlendValue.Num(); ++Index)
+	{
+		float blend = BlendUpdate;
+		MaterialChange->SetScalarParameterValue(TEXT("Blend"), blend);
+	}
 }
 
 /*setup the movement*/
@@ -226,6 +257,8 @@ void APlayerCharacter::AttackStart()
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Emerald, TEXT(__FUNCTION__));
 	}
+
+
 }
 
 void APlayerCharacter::AttackEnd()
@@ -234,4 +267,6 @@ void APlayerCharacter::AttackEnd()
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Emerald, TEXT(__FUNCTION__));
 	}
+
+
 }
