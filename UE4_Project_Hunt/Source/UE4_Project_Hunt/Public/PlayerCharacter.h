@@ -82,6 +82,10 @@ protected:
 
 	FName SocketName;
 
+	/**Pause Game Event*/
+	void PauseGame(bool bIsPaused);
+	void Pause();
+
 public:
 	/*
 	* Setup the health value and make sure it is right all the time

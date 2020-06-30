@@ -13,6 +13,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Materials/MaterialInstanceDynamic.h"
 #include "Materials/MaterialInterface.h"
+#include "GamePlayController.h"
 
 // Sets default values
 APlayerCharacter::APlayerCharacter()
@@ -194,7 +195,7 @@ void APlayerCharacter::SprintEnd()
 
 /*
 * this 2 functions is only for the controller
-* you cant multiple the rate to the delta for the mouse cuz the mouse already have delta on it
+* you cant multiple the rate to the delta for the mouse because the mouse already have delta on it
 */
 void APlayerCharacter::TrunRate(float Value)
 {
@@ -209,16 +210,33 @@ void APlayerCharacter::LookUpRate(float Value)
 /**Setup mouse movement and Sensitivity*/
 void APlayerCharacter::LookUp(float AxisValue)
 {
-	float MouseSen = FMath::Clamp(Mousesensitivity, 0.f, 1.f); // Max sensitivity it (1)
+	float MouseSen = FMath::Clamp(Mousesensitivity, 0.f, 1.f); // Max sensitivity is (1)
 
 	AddControllerPitchInput(AxisValue * MouseSen);
 }
 
 void APlayerCharacter::Turn(float AxisValue)
 {
-	float MouseSen = FMath::Clamp(Mousesensitivity, 0.f, 1.f); // Max sensitivity it (1)
+	float MouseSen = FMath::Clamp(Mousesensitivity, 0.f, 1.f); // Max sensitivity is (1)
 
 	AddControllerYawInput(AxisValue * MouseSen);
+}
+
+/**If player hit pause key the game will pause (default = false)*/
+void  APlayerCharacter::PauseGame(bool bIsPaused)
+{
+	AGamePlayController* const MyChar = Cast<AGamePlayController>(GEngine->GetFirstLocalPlayerController(GetWorld()));
+
+	if (MyChar != NULL)
+	{
+		MyChar->SetPause(bIsPaused);
+	}
+}
+
+/**Call the boll and set it to true*/
+void APlayerCharacter::Pause()
+{
+	PauseGame(true);
 }
 
 // Called to bind functionality to input
@@ -230,7 +248,7 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 
-	/*Setup sprint keys*/
+	/**Setup sprint keys*/
 	PlayerInputComponent->BindAction("Sprint", IE_Pressed, this, &APlayerCharacter::SprintStart);
 	PlayerInputComponent->BindAction("Sprint", IE_Released, this, &APlayerCharacter::SprintEnd);
 
@@ -249,6 +267,9 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	/**Setup the attacking Event*/
 	PlayerInputComponent->BindAction("Attack", IE_Pressed, this,  &APlayerCharacter::AttackStart);
 	PlayerInputComponent->BindAction("Attack", IE_Released, this, &APlayerCharacter::AttackEnd);
+
+	/**Setup pause event*/
+	PlayerInputComponent->BindAction("Pause", IE_Pressed, this, &APlayerCharacter::Pause);
 }
 
 void APlayerCharacter::AttackStart()
