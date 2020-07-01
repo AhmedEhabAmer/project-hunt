@@ -48,6 +48,13 @@ APlayerCharacter::APlayerCharacter()
 	/*Setup the sprint speed*/
 	SprintSpeedMultiplier = 1.f;
 
+	/**Load animation montage*/
+	static ConstructorHelpers::FObjectFinder<UAnimMontage> MeleeLightAttackAinmationObject((TEXT("AnimMontage'/Game/Animations/Actions/Attack/Montage/M_LightAttack_1.M_LightAttack_1'")));
+	if (MeleeLightAttackAinmationObject.Succeeded())
+	{
+		MeleeLightAttackAinmation = MeleeLightAttackAinmationObject.Object;
+	}
+
 	/**IDntify objects*/
 	SocketName = "Cover";
 }
@@ -279,7 +286,14 @@ void APlayerCharacter::AttackStart()
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Emerald, TEXT(__FUNCTION__));
 	}
 
+	// generate a random montage between 1 and 2
+	int32 MontageSactionIndax = rand()% 3 + 1;
 
+	// create montage section
+	FString MontageSection = "Start_" + FString::FromInt(MontageSactionIndax);
+
+	PlayAnimMontage(MeleeLightAttackAinmation, 1.f, FName(*MontageSection));
+	
 }
 
 void APlayerCharacter::AttackEnd()
@@ -288,6 +302,4 @@ void APlayerCharacter::AttackEnd()
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Emerald, TEXT(__FUNCTION__));
 	}
-
-
 }
