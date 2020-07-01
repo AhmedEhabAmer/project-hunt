@@ -10,6 +10,7 @@ class UStaticMeshComponent;
 class USpringArmComponent;
 class UCameraComponent;
 class UMaterialInstanceDynamic;
+class UAnimMontage;
 
 UCLASS()
 class UE4_PROJECT_HUNT_API APlayerCharacter : public ACharacter
@@ -31,16 +32,10 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	/*Setup player movement and sprint*/
-	void MoveForward(float Value);
-	void MoveRight(float Value);
-	void SprintStart();
-	void SprintEnd();
-
-	/*Setup player camera and mesh
+	/**
+	*Setup player camera and mesh
 	* Setup the base for the controller
 	*/
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Sittings")
 	UStaticMeshComponent* PlayerMesh;
 
@@ -50,19 +45,40 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera Sittings")
 	UCameraComponent* PlayerCamera;
 
-	/**Setup the base for the controller*/
+	/**Setup the attachment for the character*/
+	UPROPERTY(EditAnywhere, Category = "Attack")
+	UStaticMeshComponent* KatinaCover;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Animation", meta = (AllowPreserveAccses = "true"))
+	UAnimMontage* MeleeLightAttackAinmation;
+
+protected:
+
+	/*Setup player movement and sprint*/
+	void MoveForward(float Value);
+	void MoveRight(float Value);
+	void LookUp(float AxisValue);
+	void Turn(float AxisValue);
 	void LookUpRate(float Value);
 	void TrunRate(float Value);
+	void SprintStart();
+	void SprintEnd();
 
+	/**Pause Game Event*/
+	void PauseGame(bool bIsPaused);
+	void Pause();
+
+	/**Setup Attack event*/
+	void AttackStart();
+	void AttackEnd();
+
+	FName SocketName;
+	
 	UPROPERTY(EditDefaultsOnly, Category = "Controller")
 	float BaseLookUpRate;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Controller")
 	float BaseTurnRate;
-
-	/*Setup the mouse sensitivity*/
-	void LookUp(float AxisValue);
-	void Turn(float AxisValue);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "sensitivity")
 	float Mousesensitivity;
@@ -70,17 +86,6 @@ public:
 	/**Setup character speed*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Movment : Walking")
 	float SprintSpeedMultiplier;
-
-protected:
-	/**Setup Attack event*/
-	void AttackStart();
-	void AttackEnd();
-
-	/**Setup the attachment for the character*/
-	UPROPERTY(EditAnywhere, Category = "Attack")
-	UStaticMeshComponent* KatinaCover;
-
-	FName SocketName;
 
 public:
 	/*
@@ -149,6 +154,16 @@ private:
 
 	void StartTimer();
 
+	/**
+	* This dynamic material have a reference to player health
+	* If the player take any damage the material will change
+	* This dynamic material has a bind with material blueprint
+	* Array is the manger for the bind change
+	* Every time the player got any damage the array number will increase with the damage amount
+	* When the array number increase the bland will change the number from 0 - 100
+	* When the bind change with array the blueprint blend will change with the array
+	* If the blueprint blend change the color transaction start
+	*/
 	FTimerHandle DamageTimerHandle;
 
 	/**Setup material change*/
