@@ -6,6 +6,7 @@
 #include "Components/TimelineComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "Components/BoxComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Kismet/GameplayStatics.h"
@@ -34,18 +35,28 @@ APlayerCharacter::APlayerCharacter()
 	PlayerCamera->SetRelativeLocation(CameraRelativeLoacation);
 	PlayerCamera->SetRelativeRotation(CameraRelativeRotation);
 
-	/**Setup character attachment*/
-	KatinaCover = CreateDefaultSubobject<UStaticMeshComponent>("Katina Cover");
-	KatinaCover->GetAttachSocketName();
+	/**Initialize Sword socket*/
+	PlayerSword = CreateDefaultSubobject<USceneComponent>("Sword Scene");
+
+	/**Initialize Sword mesh*/
+	PlayerSwordMesh = CreateDefaultSubobject<UStaticMeshComponent>("Player sword");
+	PlayerSwordMesh->SetupAttachment(PlayerSword);
+
+	/**Initialize Sword collision*/
+	SwordCollision = CreateDefaultSubobject<UBoxComponent>("Sword Collision");
+	SwordCollision->SetupAttachment(PlayerSwordMesh);
+	SwordCollision->SetCollisionProfileName("NoCollision");
+
+	SwordCollision->SetHiddenInGame(false);
 	
-	/*Setup the base for the controller BP can edit*/
+	/**Initialize the base for the controller BP can edit*/
 	BaseTurnRate = 0.45;
 	BaseLookUpRate = 0.45;
 
-	/*Setup sensitivity for mouse BP can edit*/
+	/**Initialize sensitivity for mouse BP can edit*/
 	Mousesensitivity = 1.f;
 
-	/*Setup the sprint speed*/
+	/**Initialize the sprint speed*/
 	SprintSpeedMultiplier = 1.f;
 
 	/**Load animation montage*/
@@ -54,9 +65,6 @@ APlayerCharacter::APlayerCharacter()
 	{
 		MeleeLightAttackAinmation = MeleeLightAttackAinmationObject.Object;
 	}
-
-	/**IDntify objects*/
-	SocketName = "Cover";
 }
 
 // Called when the game starts or when spawned
@@ -79,6 +87,14 @@ void APlayerCharacter::BeginPlay()
 
 	MaterialChange = UMaterialInstanceDynamic::Create(ChangeMaterial, NULL);
 	Char->SetMaterial(1, MaterialChange);
+
+	/**Attach collision components to sockets based on transform defenestrations*/
+	const FAttachmentTransformRules AttachRules(EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget,
+	EAttachmentRule::KeepWorld, false);
+
+	PlayerSword->AttachToComponent(GetMesh(), AttachRules, "SwordAttackPosition");
+
+	
 }
 
 // Called every frame
@@ -272,11 +288,28 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerInputComponent->BindAxis("LookUpRate", this, &APlayerCharacter::LookUpRate);
 
 	/**Setup the attacking Event*/
-	PlayerInputComponent->BindAction("Attack", IE_Pressed, this,  &APlayerCharacter::AttackStart);
+	PlayerInputComponent->BindAction("Attack", IE_Pressed, this,  &APlayerCharacter::AttackInput);
 	PlayerInputComponent->BindAction("Attack", IE_Released, this, &APlayerCharacter::AttackEnd);
 
 	/**Setup pause event*/
 	PlayerInputComponent->BindAction("Pause", IE_Pressed, this, &APlayerCharacter::Pause);
+}
+
+void APlayerCharacter::AttackInput()
+{
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Emerald, TEXT(__FUNCTION__));
+	}
+
+	// generate a random montage between 1 and 2
+	int32 MontageSactionIndax = rand() % 3 + 1;
+
+	// create montage section
+	FString MontageSection = "Start_" + FString::FromInt(MontageSactionIndax);
+
+	PlayAnimMontage(MeleeLightAttackAinmation, 1.f, FName(*MontageSection));
+
 }
 
 void APlayerCharacter::AttackStart()
@@ -286,14 +319,7 @@ void APlayerCharacter::AttackStart()
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Emerald, TEXT(__FUNCTION__));
 	}
 
-	// generate a random montage between 1 and 2
-	int32 MontageSactionIndax = rand()% 3 + 1;
-
-	// create montage section
-	FString MontageSection = "Start_" + FString::FromInt(MontageSactionIndax);
-
-	PlayAnimMontage(MeleeLightAttackAinmation, 1.f, FName(*MontageSection));
-	
+	SwordCollision->SetCollisionProfileName("Weapon");
 }
 
 void APlayerCharacter::AttackEnd()
@@ -302,4 +328,6 @@ void APlayerCharacter::AttackEnd()
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Emerald, TEXT(__FUNCTION__));
 	}
+
+	SwordCollision->SetCollisionProfileName("NoCollision");
 }
