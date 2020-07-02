@@ -34,6 +34,13 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	/**Setup Attack event*/
+	void AttackStart();
+	void AttackEnd();
+	
+	/**Triggers attack animation based on user input*/
+	void AttackInput();
+
 	/**
 	* Setup player camera and mesh
 	* Setup the base for the controller
@@ -78,10 +85,6 @@ protected:
 	/**Pause Game Event*/
 	void PauseGame(bool bIsPaused);
 	void Pause();
-
-	/**Setup Attack event*/
-	void AttackStart();
-	void AttackEnd();
 
 	FName SocketName;
 	

@@ -45,6 +45,8 @@ APlayerCharacter::APlayerCharacter()
 	/**Initialize Sword collision*/
 	SwordCollision = CreateDefaultSubobject<UBoxComponent>("Sword Collision");
 	SwordCollision->SetupAttachment(PlayerSwordMesh);
+	SwordCollision->SetCollisionProfileName("NoCollision");
+
 	SwordCollision->SetHiddenInGame(false);
 	
 	/**Initialize the base for the controller BP can edit*/
@@ -286,11 +288,28 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerInputComponent->BindAxis("LookUpRate", this, &APlayerCharacter::LookUpRate);
 
 	/**Setup the attacking Event*/
-	PlayerInputComponent->BindAction("Attack", IE_Pressed, this,  &APlayerCharacter::AttackStart);
+	PlayerInputComponent->BindAction("Attack", IE_Pressed, this,  &APlayerCharacter::AttackInput);
 	PlayerInputComponent->BindAction("Attack", IE_Released, this, &APlayerCharacter::AttackEnd);
 
 	/**Setup pause event*/
 	PlayerInputComponent->BindAction("Pause", IE_Pressed, this, &APlayerCharacter::Pause);
+}
+
+void APlayerCharacter::AttackInput()
+{
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Emerald, TEXT(__FUNCTION__));
+	}
+
+	// generate a random montage between 1 and 2
+	int32 MontageSactionIndax = rand() % 3 + 1;
+
+	// create montage section
+	FString MontageSection = "Start_" + FString::FromInt(MontageSactionIndax);
+
+	PlayAnimMontage(MeleeLightAttackAinmation, 1.f, FName(*MontageSection));
+
 }
 
 void APlayerCharacter::AttackStart()
@@ -300,14 +319,7 @@ void APlayerCharacter::AttackStart()
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Emerald, TEXT(__FUNCTION__));
 	}
 
-	// generate a random montage between 1 and 2
-	int32 MontageSactionIndax = rand()% 3 + 1;
-
-	// create montage section
-	FString MontageSection = "Start_" + FString::FromInt(MontageSactionIndax);
-
-	PlayAnimMontage(MeleeLightAttackAinmation, 1.f, FName(*MontageSection));
-	
+	SwordCollision->SetCollisionProfileName("Weapon");
 }
 
 void APlayerCharacter::AttackEnd()
@@ -316,4 +328,6 @@ void APlayerCharacter::AttackEnd()
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Emerald, TEXT(__FUNCTION__));
 	}
+
+	SwordCollision->SetCollisionProfileName("NoCollision");
 }
