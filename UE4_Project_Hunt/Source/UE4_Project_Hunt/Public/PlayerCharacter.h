@@ -7,10 +7,12 @@
 #include "PlayerCharacter.generated.h"
 
 class UStaticMeshComponent;
+class USceneComponent;
 class USpringArmComponent;
 class UCameraComponent;
 class UMaterialInstanceDynamic;
 class UAnimMontage;
+class UBoxComponent;
 
 UCLASS()
 class UE4_PROJECT_HUNT_API APlayerCharacter : public ACharacter
@@ -33,28 +35,37 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	/**
-	*Setup player camera and mesh
+	* Setup player camera and mesh
 	* Setup the base for the controller
 	*/
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Sittings")
-	UStaticMeshComponent* PlayerMesh;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera Sittings")
 	USpringArmComponent* CameraSpringArm;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera Sittings")
 	UCameraComponent* PlayerCamera;
 
-	/**Setup the attachment for the character*/
-	UPROPERTY(EditAnywhere, Category = "Attack")
-	UStaticMeshComponent* KatinaCover;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Animation", meta = (AllowPreserveAccses = "true"))
+	/**Setup animation montage calling*/
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Animation", meta = (AllowPrivateAcsess = "true"))
 	UAnimMontage* MeleeLightAttackAinmation;
+
+	/**Setup sword mesh*/
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Meshes", meta = (AllowPrivateAcsess = "true"))
+	UStaticMeshComponent* PlayerSwordMesh;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Meshes", meta = (AllowPraivateAcsess = "true"))
+	USceneComponent* PlayerSword;
+
+	/**Setup Attack Collision*/
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Collison", meta = (AllowPrivateAcsess = "true"))
+	UBoxComponent* SwordCollision;
 
 protected:
 
-	/*Setup player movement and sprint*/
+	/**
+	* Functions for player movement and sprint
+	* Functions for controller movement 
+	* Functions for mouse sensitivity
+	*/
 	void MoveForward(float Value);
 	void MoveRight(float Value);
 	void LookUp(float AxisValue);
