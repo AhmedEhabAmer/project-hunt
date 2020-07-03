@@ -37,7 +37,7 @@ void ADamageActor::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, cla
 		MyCharacter = Cast<AActor>(OtherActor);
 		MyHit = SweepResult;
 		GetWorldTimerManager().SetTimer(DamageTimerHandle, this, &ADamageActor::ApplyDamage, TimeToTakeDamageInSeconds,
-			true, 0.0f);
+		true, 0.0f);
 	}
 }
 void ADamageActor::OnOverlapEnd(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,

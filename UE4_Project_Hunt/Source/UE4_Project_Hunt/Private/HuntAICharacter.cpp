@@ -5,6 +5,7 @@
 #include "HuntAIController.h"
 #include "BeHaviorTree/BehaviorTree.h"
 #include "perception/PawnSensingComponent.h"
+#include "TimerManager.h"
 
 // Sets default values
 AHuntAICharacter::AHuntAICharacter()
@@ -19,11 +20,53 @@ void AHuntAICharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	/**Setup the Heath to be ready if damage event starts*/
+	FullHealth = 100.f;
+	Health = FullHealth;
+	HealthPrecentage = 1.f;
+	bCanBeDamaged = true;
+
 	if (PawnSensingComp)
 	{
 		PawnSensingComp->OnSeePawn.AddDynamic(this, &AHuntAICharacter::OnPlayerCaught);
 	}
 
+}
+
+float AHuntAICharacter::GetHealth()
+{
+	return HealthPrecentage;
+}
+
+void AHuntAICharacter::SetDamageState()
+{	
+	bCanBeDamaged = true;
+}
+
+void AHuntAICharacter::DamageTimer()
+{
+	GetWorldTimerManager().SetTimer(DamageTimerHandle, this,
+	&AHuntAICharacter::SetDamageState, 2.0f, false);
+}
+
+float AHuntAICharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	bCanBeDamaged = false;
+	UpdateHealth(-DamageAmount);
+	DamageTimer();
+	return DamageAmount;
+}
+
+void AHuntAICharacter::UpdateHealth(float HealthChange)
+{
+	Health += HealthChange;
+	Health = FMath::Clamp(Health, 0.0f, FullHealth);
+	HealthPrecentage = Health / FullHealth;
+	
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Damage"));
+	}
 }
 
 void AHuntAICharacter::OnPlayerCaught(APawn* InPawn)

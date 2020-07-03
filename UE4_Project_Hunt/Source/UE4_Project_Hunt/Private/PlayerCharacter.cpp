@@ -157,7 +157,6 @@ float APlayerCharacter::TakeDamage(float DamageAmount, struct FDamageEvent const
 	bCanBeDamaged = false;
 	UpdateHealth(-DamageAmount);
 	DamageTimer();
-	TimeToTakeDamage();
 	return DamageAmount;
 }
 
@@ -341,6 +340,11 @@ void APlayerCharacter::OnHitAttack(UPrimitiveComponent* HitComponent, AActor* Ot
 	if (GEngine)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, Hit.GetActor()->GetName());
+	}
+	
+	if (bCanBeDamaged)
+	{
+		
 	}
 
 }

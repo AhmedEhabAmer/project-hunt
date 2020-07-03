@@ -30,6 +30,35 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = AI)
 	class UPawnSensingComponent* PawnSensingComp;
 
+
+	// setup health for AI
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
+	float FullHealth;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
+	float Health;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
+	float HealthPrecentage;
+
+	UFUNCTION(BlueprintPure, Category = "Health")
+	float GetHealth();
+
+	UFUNCTION(BlueprintCallable, Category = "Health")
+	void UpdateHealth(float HealthChange);
+
+	UFUNCTION()
+	void SetDamageState();
+
+	UFUNCTION()
+	void DamageTimer();
+
+	UFUNCTION()
+	float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent,
+	class AController* EventInstigator, AActor* DamageCauser);
+
+	FTimerHandle DamageTimerHandle;
+
 private:
 	
 	UFUNCTION()
