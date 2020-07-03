@@ -5,6 +5,7 @@
 #include "HuntAIController.h"
 #include "BeHaviorTree/BehaviorTree.h"
 #include "perception/PawnSensingComponent.h"
+#include "Components/BoxComponent.h"
 #include "TimerManager.h"
 
 // Sets default values
@@ -13,6 +14,10 @@ AHuntAICharacter::AHuntAICharacter()
 	/*Initialize senses*/
 	PawnSensingComp = CreateDefaultSubobject<UPawnSensingComponent>("PawnSensingComp");
 	PawnSensingComp->SetPeripheralVisionAngle(90.f);
+
+	/*HitBox = CreateDefaultSubobject<UBoxComponent>("Hit Box");
+	HitBox->SetupAttachment(RootComponent);
+	HitBox->SetCollisionProfileName("NoCollision");*/
 }
 
 // Called when the game starts or when spawned

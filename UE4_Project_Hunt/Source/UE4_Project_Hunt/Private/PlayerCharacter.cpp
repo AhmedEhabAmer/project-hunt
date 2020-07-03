@@ -17,6 +17,7 @@
 #include "GamePlayController.h"
 #include "HuntAICharacter.h"
 
+
 // Sets default values
 APlayerCharacter::APlayerCharacter()
 {
@@ -46,7 +47,7 @@ APlayerCharacter::APlayerCharacter()
 	/**Initialize Sword collision*/
 	SwordCollision = CreateDefaultSubobject<UBoxComponent>("Sword Collision");
 	SwordCollision->SetupAttachment(PlayerSwordMesh);
-	SwordCollision->SetCollisionProfileName("NoCollision");
+	SwordCollision->SetCollisionProfileName(MeleeAttackCollisionProfile.Desabled);
 	SwordCollision->SetNotifyRigidBodyCollision(false);
 	SwordCollision->SetHiddenInGame(false); // Show the collision while game is running
 	
@@ -69,6 +70,13 @@ APlayerCharacter::APlayerCharacter()
 	{
 		MeleeLightAttackAinmation = MeleeLightAttackAinmationObject.Object;
 	}
+
+	/**Load animation Data table*/
+	static ConstructorHelpers::FObjectFinder<UDataTable> LightAttackMontageDataTableObject(TEXT("DataTable'/Game/Animations/DataTables/Animation_DataTable.Animation_DataTable'"));
+	if (LightAttackMontageDataTableObject.Succeeded())
+	{
+		LightAttackDataTable = LightAttackMontageDataTableObject.Object;
+	}
 }
 
 // Called when the game starts or when spawned
@@ -85,7 +93,7 @@ void APlayerCharacter::BeginPlay()
 	/*Start the give damage every X second timer*/
 	StartTimer();
 
-	/**Setup material change*/
+	/**Initialize material change*/
 	auto Char = FindComponentByClass<USkeletalMeshComponent>();
 	auto ChangeMaterial = Char->GetMaterial(1);
 
@@ -147,14 +155,14 @@ bool APlayerCharacter::bPlayerFlash()
 	return false;
 }
 
-/*To start take damage if the player overlap any damage actor*/
+/**To start take damage if the player overlap any damage actor*/
 void APlayerCharacter::DamageTimer()
 {
 	GetWorldTimerManager().SetTimer(MemberTimerHandle, this,
 	&APlayerCharacter::SetDamageState, 2.0f, false);
 }
 
-/*The take damage function if the player overlap any damage actor or enemy hit this function will apply damage*/
+/**The take damage function if the player overlap any damage actor or enemy hit this function will apply damage*/
 float APlayerCharacter::TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent,
 	class AController * EventInstigator, AActor * DamageCauser)
 {
@@ -164,7 +172,7 @@ float APlayerCharacter::TakeDamage(float DamageAmount, struct FDamageEvent const
 	return DamageAmount;
 }
 
-/*Update the health bar*/
+/**Update the health bar*/
 void APlayerCharacter::UpdateHealth(float HealthChange)
 {
 	/**Update health*/
@@ -306,14 +314,24 @@ void APlayerCharacter::AttackInput()
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Emerald, TEXT(__FUNCTION__));
 	}
 
-	// generate a random montage between 1 and 2
-	int32 MontageSactionIndax = rand() % 3 + 1;
+	if (LightAttackDataTable)
+	{
+		static const FString ContextString(TEXT("Player Attack Montage Context"));
+		FPlayerAttackMontage* AttackMontage = LightAttackDataTable->FindRow<FPlayerAttackMontage>
+		(FName(TEXT("Light_Katana")), ContextString, true);
 
-	// create montage section
-	FString MontageSection = "Start_" + FString::FromInt(MontageSactionIndax);
+		if (AttackMontage)
+		{
+			// generate a random montage between 1 and whatever is defined in data table for this montage
+			int32 MontageSactionIndax = rand() % AttackMontage->AnimSectionCount + 1;
 
-	PlayAnimMontage(MeleeLightAttackAinmation, 1.f, FName(*MontageSection));
+			// create montage section
+			FString MontageSection = "Start_" + FString::FromInt(MontageSactionIndax);
 
+			PlayAnimMontage(AttackMontage->MeleeLightAttackAinmation, 1.f, FName(*MontageSection));
+
+		}
+	}
 }
 
 void APlayerCharacter::AttackStart()
@@ -323,7 +341,7 @@ void APlayerCharacter::AttackStart()
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Emerald, TEXT(__FUNCTION__));
 	}
 
-	SwordCollision->SetCollisionProfileName("Weapon");
+	SwordCollision->SetCollisionProfileName(MeleeAttackCollisionProfile.Enabled);
 	SwordCollision->SetNotifyRigidBodyCollision(true);
 }
 
@@ -334,7 +352,7 @@ void APlayerCharacter::AttackEnd()
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Emerald, TEXT(__FUNCTION__));
 	}
 
-	SwordCollision->SetCollisionProfileName("NoCollision");
+	SwordCollision->SetCollisionProfileName(MeleeAttackCollisionProfile.Desabled);
 	SwordCollision->SetNotifyRigidBodyCollision(false);
 }
 
