@@ -15,6 +15,7 @@
 #include "Materials/MaterialInstanceDynamic.h"
 #include "Materials/MaterialInterface.h"
 #include "GamePlayController.h"
+#include "HuntAICharacter.h"
 
 // Sets default values
 APlayerCharacter::APlayerCharacter()
@@ -53,11 +54,14 @@ APlayerCharacter::APlayerCharacter()
 	BaseTurnRate = 0.45;
 	BaseLookUpRate = 0.45;
 
-	/**sensitivity for mouse BP can edit*/
+	/**Initialize sensitivity for mouse BP can edit*/
 	Mousesensitivity = 1.f;
 
 	/**Initialize the sprint speed*/
 	SprintSpeedMultiplier = 1.f;
+
+	/**Initialize Light Damage*/
+	LightAttackDamage = 25.f;
 
 	/**Load animation montage*/
 	static ConstructorHelpers::FObjectFinder<UAnimMontage> MeleeLightAttackAinmationObject((TEXT("AnimMontage'/Game/Animations/Actions/Attack/Montage/M_LightAttack_1.M_LightAttack_1'")));
@@ -147,7 +151,7 @@ bool APlayerCharacter::bPlayerFlash()
 void APlayerCharacter::DamageTimer()
 {
 	GetWorldTimerManager().SetTimer(MemberTimerHandle, this,
-		&APlayerCharacter::SetDamageState, 2.0f, false);
+	&APlayerCharacter::SetDamageState, 2.0f, false);
 }
 
 /*The take damage function if the player overlap any damage actor or enemy hit this function will apply damage*/
@@ -342,9 +346,14 @@ void APlayerCharacter::OnHitAttack(UPrimitiveComponent* HitComponent, AActor* Ot
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, Hit.GetActor()->GetName());
 	}
 	
+	AHuntAICharacter* AIChar = Cast<AHuntAICharacter>(OtherActor);
+	AIHit = Hit;
+	TSubclassOf<UDamageType> SwordDamage;
+
 	if (bCanBeDamaged)
 	{
-		
+		UGameplayStatics::ApplyPointDamage(AIChar, LightAttackDamage, GetActorLocation(),
+		Hit, nullptr, this, SwordDamage);
 	}
 
 }

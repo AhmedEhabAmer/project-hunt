@@ -159,6 +159,13 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera Relative")
 	FRotator CameraRelativeRotation = FRotator(0.f, 30.f, 70.f);
 
+	/**
+	* Initialize Light Attack damage
+	*/
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Attack : Light", meta = (AllowPrivateAcsess = "true"))
+	float LightAttackDamage;
+
+	FHitResult AIHit;
 private:
 	/*
 	* this is for the damage function

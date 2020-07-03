@@ -6,9 +6,7 @@
 #include "AIController.h"
 #include "HuntAIController.generated.h"
 
-/**
- * 
- */
+
 UCLASS()
 class UE4_PROJECT_HUNT_API AHuntAIController : public AAIController
 {

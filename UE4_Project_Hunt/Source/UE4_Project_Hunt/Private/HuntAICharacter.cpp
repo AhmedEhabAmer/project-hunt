@@ -65,7 +65,12 @@ void AHuntAICharacter::UpdateHealth(float HealthChange)
 	
 	if (GEngine)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Damage"));
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("%f"), HealthPrecentage));
+	}
+
+	if (HealthPrecentage <= 0.f)
+	{
+		Destroy();
 	}
 }
 
