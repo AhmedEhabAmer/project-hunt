@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Engine/DataTable.h"
 #include "GameFramework/Character.h"
 #include "PlayerCharacter.generated.h"
 
@@ -13,6 +14,44 @@ class UCameraComponent;
 class UMaterialInstanceDynamic;
 class UAnimMontage;
 class UBoxComponent;
+class UDataTable;
+
+USTRUCT(BlueprintType)
+struct FPlayerAttackMontage : public FTableRowBase
+{	
+	GENERATED_BODY()
+	
+	/**Initialize animation montage calling*/
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UAnimMontage* MeleeLightAttackAinmation;
+	
+	/**Amount of sections within our montage*/
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	int32 AnimSectionCount;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	FString Description;
+};
+
+USTRUCT(BlueprintType)
+struct FMeleeCollisionProfile
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FName Enabled; 
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FName Desabled;
+	
+	// default contractor
+	FMeleeCollisionProfile()
+	{
+		Enabled = FName(TEXT("Weapon"));
+		Desabled = FName(TEXT("NoCollisoin"));
+	}
+
+};
 
 UCLASS()
 class UE4_PROJECT_HUNT_API APlayerCharacter : public ACharacter
@@ -61,6 +100,10 @@ public:
 	/**Initialize animation montage calling*/
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Animation", meta = (AllowPrivateAcsess = "true"))
 	UAnimMontage* MeleeLightAttackAinmation;
+
+	/**Light melee attack data table*/
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Animation", meta = (AllowPrivateAcsess = "true"))
+	UDataTable* LightAttackDataTable;
 
 	/**Initialize sword mesh*/
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Meshes", meta = (AllowPrivateAcsess = "true"))
@@ -167,6 +210,10 @@ public:
 
 	FHitResult AIHit;
 private:
+	
+	/**Call the contractor definition*/
+	FMeleeCollisionProfile MeleeAttackCollisionProfile;
+
 	/*
 	* this is for the damage function
 	* The timer handle for make the time running well
