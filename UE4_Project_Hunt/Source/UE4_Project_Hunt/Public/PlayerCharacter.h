@@ -34,7 +34,7 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	/**Setup Attack event*/
+	/**Initialize Attack event*/
 	void AttackStart();
 	void AttackEnd();
 	
@@ -42,8 +42,15 @@ public:
 	void AttackInput();
 
 	/**
-	* Setup player camera and mesh
-	* Setup the base for the controller
+	* Triggered when the collision hit event fires between our weapon and enemy entities
+	*/
+	UFUNCTION()
+	void OnHitAttack(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+	FVector NormalImpulse, const FHitResult& Hit);
+
+	/**
+	* Initialize player camera and mesh
+	* Initialize the base for the controller
 	*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera Sittings")
 	USpringArmComponent* CameraSpringArm;
@@ -51,18 +58,18 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera Sittings")
 	UCameraComponent* PlayerCamera;
 
-	/**Setup animation montage calling*/
+	/**Initialize animation montage calling*/
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Animation", meta = (AllowPrivateAcsess = "true"))
 	UAnimMontage* MeleeLightAttackAinmation;
 
-	/**Setup sword mesh*/
+	/**Initialize sword mesh*/
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Meshes", meta = (AllowPrivateAcsess = "true"))
 	UStaticMeshComponent* PlayerSwordMesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Meshes", meta = (AllowPraivateAcsess = "true"))
 	USceneComponent* PlayerSword;
 
-	/**Setup Attack Collision*/
+	/**Initialize Attack Collision*/
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Collison", meta = (AllowPrivateAcsess = "true"))
 	UBoxComponent* SwordCollision;
 
@@ -168,6 +175,8 @@ private:
 
 	void StartTimer();
 
+	FTimerHandle DamageTimerHandle;
+
 	/**
 	* This dynamic material have a reference to player health
 	* If the player take any damage the material will change
@@ -178,8 +187,5 @@ private:
 	* When the bind change with array the blueprint blend will change with the array
 	* If the blueprint blend change the color transaction start
 	*/
-	FTimerHandle DamageTimerHandle;
-
-	/**Setup material change*/
 	UMaterialInstanceDynamic* MaterialChange;
 };

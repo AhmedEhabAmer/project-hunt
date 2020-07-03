@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "PlayerCharacter.h"
 #include "Kismet/KismetMathLibrary.h"
@@ -46,14 +46,14 @@ APlayerCharacter::APlayerCharacter()
 	SwordCollision = CreateDefaultSubobject<UBoxComponent>("Sword Collision");
 	SwordCollision->SetupAttachment(PlayerSwordMesh);
 	SwordCollision->SetCollisionProfileName("NoCollision");
-
-	SwordCollision->SetHiddenInGame(false);
+	SwordCollision->SetNotifyRigidBodyCollision(false);
+	SwordCollision->SetHiddenInGame(false); // Show the collision while game is running
 	
 	/**Initialize the base for the controller BP can edit*/
 	BaseTurnRate = 0.45;
 	BaseLookUpRate = 0.45;
 
-	/**Initialize sensitivity for mouse BP can edit*/
+	/**sensitivity for mouse BP can edit*/
 	Mousesensitivity = 1.f;
 
 	/**Initialize the sprint speed*/
@@ -94,7 +94,8 @@ void APlayerCharacter::BeginPlay()
 
 	PlayerSword->AttachToComponent(GetMesh(), AttachRules, "SwordAttackPosition");
 
-	
+	/**Initialize overlap event*/
+	SwordCollision->OnComponentHit.AddDynamic(this, &APlayerCharacter::OnHitAttack);
 }
 
 // Called every frame
@@ -107,7 +108,7 @@ void APlayerCharacter::Tick(float DeltaTime)
 void APlayerCharacter::StartTimer()
 {
 	GetWorldTimerManager().SetTimer(MemberTimerHandle, this,
-		&APlayerCharacter::TimeToTakeDamage, TimerPerSeconds, true);
+	&APlayerCharacter::TimeToTakeDamage, TimerPerSeconds, true);
 }
 
 /*The player take damage every X second BP can edit that*/
@@ -320,6 +321,7 @@ void APlayerCharacter::AttackStart()
 	}
 
 	SwordCollision->SetCollisionProfileName("Weapon");
+	SwordCollision->SetNotifyRigidBodyCollision(true);
 }
 
 void APlayerCharacter::AttackEnd()
@@ -330,4 +332,15 @@ void APlayerCharacter::AttackEnd()
 	}
 
 	SwordCollision->SetCollisionProfileName("NoCollision");
+	SwordCollision->SetNotifyRigidBodyCollision(false);
+}
+
+void APlayerCharacter::OnHitAttack(UPrimitiveComponent* HitComponent, AActor* OtherActor,
+					   UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
+{
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, Hit.GetActor()->GetName());
+	}
+
 }

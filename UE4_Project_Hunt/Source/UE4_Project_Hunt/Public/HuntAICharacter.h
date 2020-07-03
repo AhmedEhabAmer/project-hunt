@@ -30,7 +30,6 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = AI)
 	class UPawnSensingComponent* PawnSensingComp;
 
-
 private:
 	
 	UFUNCTION()
