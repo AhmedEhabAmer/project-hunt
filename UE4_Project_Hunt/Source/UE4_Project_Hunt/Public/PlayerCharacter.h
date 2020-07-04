@@ -87,13 +87,11 @@ public:
 	void OnHitAttack(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
 	FVector NormalImpulse, const FHitResult& Hit);
 
-	/**
-	* Initialize player camera and mesh
-	* Initialize the base for the controller
-	*/
+	/**Initialize camera spring arm*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera Sittings")
 	USpringArmComponent* CameraSpringArm;
 
+	/**Initialize player camera*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera Sittings")
 	UCameraComponent* PlayerCamera;
 
@@ -101,9 +99,13 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Animation", meta = (AllowPrivateAcsess = "true"))
 	UAnimMontage* MeleeLightAttackAinmation;
 
-	/**Light melee attack data table*/
+	/**Light Melee attack data table*/
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Animation", meta = (AllowPrivateAcsess = "true"))
 	UDataTable* LightAttackDataTable;
+
+	/**Initialize animation variable*/
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Animation", meta = (AllowPraivateAcsess = "true"))
+	float AnimationVariable;
 
 	/**Initialize sword mesh*/
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Meshes", meta = (AllowPrivateAcsess = "true"))
@@ -115,6 +117,7 @@ public:
 	/**Initialize Attack Collision*/
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Collison", meta = (AllowPrivateAcsess = "true"))
 	UBoxComponent* SwordCollision;
+
 
 protected:
 
@@ -211,6 +214,11 @@ public:
 	FHitResult AIHit;
 private:
 	
+	UAnimInstance* AnimInstance;
+
+	/**Reference to attack data table*/
+	FPlayerAttackMontage* LightAttackMontage;
+
 	/**Call the contractor definition*/
 	FMeleeCollisionProfile MeleeAttackCollisionProfile;
 

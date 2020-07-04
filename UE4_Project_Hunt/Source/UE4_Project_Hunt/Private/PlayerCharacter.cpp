@@ -108,6 +108,9 @@ void APlayerCharacter::BeginPlay()
 
 	/**Initialize overlap event*/
 	SwordCollision->OnComponentHit.AddDynamic(this, &APlayerCharacter::OnHitAttack);
+
+	/**Initialize Aim Instance*/
+	AnimInstance = GetMesh()->GetAnimInstance();
 }
 
 // Called every frame
@@ -116,14 +119,14 @@ void APlayerCharacter::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
- /*Call the timer to start take damage*/
+ /**Call the timer to start take damage*/
 void APlayerCharacter::StartTimer()
 {
 	GetWorldTimerManager().SetTimer(MemberTimerHandle, this,
 	&APlayerCharacter::TimeToTakeDamage, TimerPerSeconds, true);
 }
 
-/*The player take damage every X second BP can edit that*/
+/**The player take damage every X second BP can edit that*/
 void APlayerCharacter::TimeToTakeDamage()
 {	
 	UpdateHealth(-TimerDamage);
@@ -135,7 +138,7 @@ float APlayerCharacter::GetHealth()
 	return HealthPrecentage;
 }
 
-/*Setup the Text for the health to make it count or bar*/
+/**Setup the Text for the health to make it count or bar*/
 FText APlayerCharacter::GetHealthInText()
 {
 	int32 HP = FMath::RoundHalfFromZero(HealthPrecentage * 100);
@@ -301,7 +304,7 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 	/**Setup the attacking Event*/
 	PlayerInputComponent->BindAction("Attack", IE_Pressed, this,  &APlayerCharacter::AttackInput);
-	PlayerInputComponent->BindAction("Attack", IE_Released, this, &APlayerCharacter::AttackEnd);
+	//PlayerInputComponent->BindAction("Attack", IE_Released, this, &APlayerCharacter::AttackEnd);
 
 	/**Setup pause event*/
 	PlayerInputComponent->BindAction("Pause", IE_Pressed, this, &APlayerCharacter::Pause);
@@ -317,19 +320,21 @@ void APlayerCharacter::AttackInput()
 	if (LightAttackDataTable)
 	{
 		static const FString ContextString(TEXT("Player Attack Montage Context"));
-		FPlayerAttackMontage* AttackMontage = LightAttackDataTable->FindRow<FPlayerAttackMontage>
-		(FName(TEXT("Light_Katana")), ContextString, true);
-
-		if (AttackMontage)
+		LightAttackMontage = LightAttackDataTable->FindRow<FPlayerAttackMontage>
+		(FName(TEXT("Katana_Light")), ContextString, true);
+		
+		if (LightAttackMontage)
 		{
 			// generate a random montage between 1 and whatever is defined in data table for this montage
-			int32 MontageSactionIndax = rand() % AttackMontage->AnimSectionCount + 1;
+			int32 MontageSactionIndax = rand() % LightAttackMontage->AnimSectionCount + 1;
 
 			// create montage section
 			FString MontageSection = "Start_" + FString::FromInt(MontageSactionIndax);
 
-			PlayAnimMontage(AttackMontage->MeleeLightAttackAinmation, 1.f, FName(*MontageSection));
-
+			if (AnimInstance->Montage_IsPlaying(LightAttackMontage->MeleeLightAttackAinmation) != true)
+			{
+				PlayAnimMontage(LightAttackMontage->MeleeLightAttackAinmation, 1.f, FName(*MontageSection));
+			}
 		}
 	}
 }
@@ -359,19 +364,24 @@ void APlayerCharacter::AttackEnd()
 void APlayerCharacter::OnHitAttack(UPrimitiveComponent* HitComponent, AActor* OtherActor,
 					   UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
-	if (GEngine)
+	if (GEngine) // debug massage
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, Hit.GetActor()->GetName());
 	}
 	
+	/**Initialize AI character*/
 	AHuntAICharacter* AIChar = Cast<AHuntAICharacter>(OtherActor);
-	AIHit = Hit;
-	TSubclassOf<UDamageType> SwordDamage;
+	AIHit = Hit; // Initialize hit location
+	TSubclassOf<UDamageType> SwordDamage; // Initialize damage type
 
-	if (bCanBeDamaged)
+	if (bCanBeDamaged) // check if AI can be damage or no 
 	{
 		UGameplayStatics::ApplyPointDamage(AIChar, LightAttackDamage, GetActorLocation(),
 		Hit, nullptr, this, SwordDamage);
 	}
 
+	if (AnimInstance)
+	{
+		AnimInstance->Montage_Stop(AnimationVariable, LightAttackMontage->MeleeLightAttackAinmation);
+	}
 }
