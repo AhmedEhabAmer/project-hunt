@@ -30,9 +30,6 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = AI)
 	class UPawnSensingComponent* PawnSensingComp;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Hit Box", meta = (AllowPrivateAcsess = "true"))
-	class UBoxComponent* HitBox;
-
 	/*
 	* Setup the health value and make sure it is right all the time
 	* Setup the damage Timer and the damage state if the player take any damage

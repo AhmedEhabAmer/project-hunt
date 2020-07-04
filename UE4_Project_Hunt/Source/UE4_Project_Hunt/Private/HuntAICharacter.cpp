@@ -15,9 +15,6 @@ AHuntAICharacter::AHuntAICharacter()
 	PawnSensingComp = CreateDefaultSubobject<UPawnSensingComponent>("PawnSensingComp");
 	PawnSensingComp->SetPeripheralVisionAngle(90.f);
 
-	/*HitBox = CreateDefaultSubobject<UBoxComponent>("Hit Box");
-	HitBox->SetupAttachment(RootComponent);
-	HitBox->SetCollisionProfileName("NoCollision");*/
 }
 
 // Called when the game starts or when spawned
@@ -51,7 +48,7 @@ void AHuntAICharacter::SetDamageState()
 void AHuntAICharacter::DamageTimer()
 {
 	GetWorldTimerManager().SetTimer(DamageTimerHandle, this,
-	&AHuntAICharacter::SetDamageState, 2.0f, false);
+	&AHuntAICharacter::SetDamageState, 1.0f, false);
 }
 
 float AHuntAICharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)

@@ -155,6 +155,7 @@ protected:
 	float SprintSpeedMultiplier;
 
 public:
+
 	/*
 	* Setup the health value and make sure it is right all the time
 	* TODO If the player take any damage the screen will flash
