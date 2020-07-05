@@ -48,7 +48,7 @@ struct FMeleeCollisionProfile
 	FMeleeCollisionProfile()
 	{
 		Enabled = FName(TEXT("Weapon"));
-		Desabled = FName(TEXT("NoCollisoin"));
+		Desabled = FName(TEXT("NoCollision"));
 	}
 
 };

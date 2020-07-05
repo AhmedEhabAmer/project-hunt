@@ -15,6 +15,8 @@ AHuntAICharacter::AHuntAICharacter()
 	PawnSensingComp = CreateDefaultSubobject<UPawnSensingComponent>("PawnSensingComp");
 	PawnSensingComp->SetPeripheralVisionAngle(90.f);
 
+	/**Set the number heal the actor*/
+	NumberOfDrops = 1;
 }
 
 // Called when the game starts or when spawned
@@ -69,10 +71,29 @@ void AHuntAICharacter::UpdateHealth(float HealthChange)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("%f"), HealthPrecentage));
 	}
+	DeadUpDate(HealthPrecentage);
+}
 
-	if (HealthPrecentage <= 0.f)
+void AHuntAICharacter::DeadUpDate(float& CurrntHealth)
+{	
+	FVector Loc;
+	FRotator Rot;
+	Loc = GetActorLocation();
+
+	if (CurrntHealth <= 0.f)
 	{
 		Destroy();
+		HealSpawn(Loc, Rot);
+	}
+}
+
+void AHuntAICharacter::HealSpawn(FVector& DeadLocation, FRotator SpwanRotation)
+{
+	FActorSpawnParameters SpwanParams;
+	for (int32 i = 0; i != NumberOfDrops; ++i)
+	{
+		AHealActor* SpwanHeal = GetWorld()->SpawnActor<AHealActor>
+		(ActorToSpawn, DeadLocation, SpwanRotation, SpwanParams);
 	}
 }
 

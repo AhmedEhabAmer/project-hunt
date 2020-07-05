@@ -304,7 +304,7 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 	/**Setup the attacking Event*/
 	PlayerInputComponent->BindAction("Attack", IE_Pressed, this,  &APlayerCharacter::AttackInput);
-	PlayerInputComponent->BindAction("Attack", IE_Released, this, &APlayerCharacter::AttackEnd);
+	//PlayerInputComponent->BindAction("Attack", IE_Released, this, &APlayerCharacter::AttackEnd);
 
 	/**Setup pause event*/
 	PlayerInputComponent->BindAction("Pause", IE_Pressed, this, &APlayerCharacter::Pause);
@@ -374,10 +374,13 @@ void APlayerCharacter::OnHitAttack(UPrimitiveComponent* HitComponent, AActor* Ot
 	AIHit = Hit; // Initialize hit location
 	TSubclassOf<UDamageType> SwordDamage; // Initialize damage type
 
-	if (AIChar->bCanBeDamaged) // check if AI can be damage or no 
+	if (AIChar != nullptr)
 	{
-		UGameplayStatics::ApplyPointDamage(AIChar, LightAttackDamage, GetActorLocation(),
-		Hit, nullptr, this, SwordDamage);
+		if ((AIChar->bCanBeDamaged) != NULL) // check if AI can be damage or no 
+		{
+			UGameplayStatics::ApplyPointDamage(AIChar, LightAttackDamage, GetActorLocation(),
+				Hit, nullptr, this, SwordDamage);
+		}
 	}
 
 	if (AnimInstance)

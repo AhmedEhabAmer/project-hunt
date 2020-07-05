@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "HealActor.h"
 #include "HuntAICharacter.generated.h"
 
 UCLASS()
@@ -29,6 +30,15 @@ public:
 
 	UPROPERTY(VisibleAnywhere, Category = AI)
 	class UPawnSensingComponent* PawnSensingComp;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Spawn", meta = (AllowPrivateAcsess = "true"))
+	TSubclassOf<AHealActor> ActorToSpawn;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Spawn", meta = (AllowPrivateAcsess = "true"))
+	int32 NumberOfDrops;
+
+	void DeadUpDate(float& CurrntHealth);
+	void HealSpawn(FVector& DeadLocation, FRotator SpwanRotation);
 
 	/*
 	* Setup the health value and make sure it is right all the time
