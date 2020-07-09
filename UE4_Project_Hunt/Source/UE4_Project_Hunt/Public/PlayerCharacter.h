@@ -57,7 +57,8 @@ UENUM(BlueprintType)
 enum class EAttackType : uint8 {
 
 	MELEE_LIGHT       UMETA(DisplayName = "Melee - Light"),
-	MELEE_HEAVY       UMETA(DisplayName = "Melee - Heavy")
+	MELEE_HEAVY       UMETA(DisplayName = "Melee - Heavy"),
+	MELEE_SPECIAL	  UMETA(DisplayName = "Melee - Special")
 };
 
 UCLASS()
@@ -82,6 +83,7 @@ public:
 
 	void LightAttack();
 	void HeavyAttack();
+	void SpecialAttack();
 
 	/**Initialize player Attack event*/
 	void AttackStart();
@@ -91,6 +93,13 @@ public:
 	
 	/**Triggers attack animation based on user input*/
 	void AttackInput(EAttackType AttackType);
+	
+	/**Controls if the keyboard respond to player input or no*/
+	UFUNCTION(BlueprintCallable, Category = "Keyboard setup")
+	void SetIsKeyboardEnabled(bool Enabled);
+
+	UFUNCTION(BlueprintCallable, Category = "Keyboard setup")
+	EAttackType GetCurrntAttack();
 
 	/**
 	* Triggered when the collision hit event fires between our weapon and enemy entities
@@ -147,8 +156,6 @@ protected:
 	void PauseGame(bool bIsPaused);
 	void Pause();
 
-	FName SocketName;
-	
 	UPROPERTY(EditDefaultsOnly, Category = "Controller")
 	float BaseLookUpRate;
 
@@ -161,7 +168,9 @@ protected:
 	/**Setup character speed*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Movment : Walking")
 	float SprintSpeedMultiplier;
-
+	
+	/**Chick if keyboard respond to player input or no*/
+	bool IsKeyboardEnabled;
 public:
 
 	/*
