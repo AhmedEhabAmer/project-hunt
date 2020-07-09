@@ -196,21 +196,26 @@ void APlayerCharacter::MatUpdate(float& BlendUpdate)
 /*setup the movement*/
 void APlayerCharacter::MoveForward(float Value)
 {
+	if (Controller != NULL && (Value != 0.0f) && IsKeyboardEnabled)
+	{
+		const FRotator Rotation = Controller->GetControlRotation();
+		const FRotator YawRotation(0., Rotation.Yaw, 0);
 
-	const FRotator Rotation = Controller->GetControlRotation();
-	const FRotator YawRotation(0., Rotation.Yaw, 0);
-
-	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-	AddMovementInput(Direction, Value);
+		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+		AddMovementInput(Direction, Value);
+	}
 }
 
 void APlayerCharacter::MoveRight(float Value)
 {
+	if (Controller != NULL && (Value != 0.0f) && IsKeyboardEnabled)
+	{ 
 	const FRotator Rotation = Controller->GetControlRotation();
 	const FRotator YawRotation(0., Rotation.Yaw, 0);
 
 	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 	AddMovementInput(Direction, Value);
+	}
 }
 
 /*Setup sprint*/
@@ -298,9 +303,37 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	/**Setup the attacking Event*/
 	PlayerInputComponent->BindAction("LightAttack", IE_Pressed, this,  &APlayerCharacter::LightAttack);
 	PlayerInputComponent->BindAction("HeavyAttack", IE_Pressed, this, &APlayerCharacter::HeavyAttack);
+	PlayerInputComponent->BindAction("SpecialAttack", IE_Pressed, this, &APlayerCharacter::SpecialAttack);
 
 	/**Setup pause event*/
 	PlayerInputComponent->BindAction("Pause", IE_Pressed, this, &APlayerCharacter::Pause);
+}
+
+
+void APlayerCharacter::LightAttack()
+{
+	AttackInput(EAttackType::MELEE_LIGHT);
+}
+
+
+void APlayerCharacter::HeavyAttack()
+{
+	AttackInput(EAttackType::MELEE_HEAVY);
+}
+
+void APlayerCharacter::SpecialAttack()
+{
+	AttackInput(EAttackType::MELEE_SPECIAL);
+}
+
+EAttackType APlayerCharacter::GetCurrntAttack()
+{
+	return CurrentAttack;
+}
+
+void APlayerCharacter::SetIsKeyboardEnabled(bool Enabled)
+{
+	IsKeyboardEnabled = Enabled;
 }
 
 void APlayerCharacter::AttackInput(EAttackType AttackType)
@@ -310,11 +343,34 @@ void APlayerCharacter::AttackInput(EAttackType AttackType)
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Emerald, TEXT(__FUNCTION__));
 	}
 
+	CurrentAttack = AttackType;
+
 	if (LightAttackDataTable)
 	{
 		static const FString ContextString(TEXT("Player Attack Montage Context"));
+
+		FName RowKey;
+
+		switch (AttackType)
+		{
+		case EAttackType::MELEE_LIGHT:
+			 RowKey = FName(TEXT("Katana_Light"));
+			 SetIsKeyboardEnabled(false);
+			break;
+		case EAttackType::MELEE_HEAVY:
+			 RowKey = FName(TEXT("Katana_Heavy"));
+			 SetIsKeyboardEnabled(false);
+			break;
+		case EAttackType::MELEE_SPECIAL:
+			 RowKey = FName(TEXT("Katana_Special"));
+			 SetIsKeyboardEnabled(false);
+			break;
+		default:
+			break;
+		}
+
 		LightAttackMontage = LightAttackDataTable->FindRow<FPlayerAttackMontage>
-		(FName(TEXT("Katana_Light")), ContextString, true);
+		(RowKey, ContextString, true);
 		
 		if (LightAttackMontage)
 		{
@@ -354,27 +410,6 @@ void APlayerCharacter::AttackEnd()
 	SwordCollision->SetNotifyRigidBodyCollision(false);
 }
 
-
-void APlayerCharacter::LightAttack()
-{
-	if (GEngine)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Emerald, TEXT(__FUNCTION__));
-	}
-
-
-}
-
-
-void APlayerCharacter::HeavyAttack()
-{
-	if (GEngine)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Emerald, TEXT(__FUNCTION__));
-	}
-
-
-}
 
 void APlayerCharacter::OnHitAttack(UPrimitiveComponent* HitComponent, AActor* OtherActor,
 					   UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
