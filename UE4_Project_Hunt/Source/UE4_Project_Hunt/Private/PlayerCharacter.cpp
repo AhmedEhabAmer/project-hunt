@@ -64,13 +64,6 @@ APlayerCharacter::APlayerCharacter()
 	/**Initialize Light Damage*/
 	LightAttackDamage = 25.f;
 
-	/**Load animation montage*/
-	static ConstructorHelpers::FObjectFinder<UAnimMontage> MeleeLightAttackAinmationObject((TEXT("AnimMontage'/Game/Animations/Actions/Attack/Montage/M_LightAttack_1.M_LightAttack_1'")));
-	if (MeleeLightAttackAinmationObject.Succeeded())
-	{
-		MeleeLightAttackAinmation = MeleeLightAttackAinmationObject.Object;
-	}
-
 	/**Load animation Data table*/
 	static ConstructorHelpers::FObjectFinder<UDataTable> LightAttackMontageDataTableObject(TEXT("DataTable'/Game/Animations/DataTables/Animation_DataTable.Animation_DataTable'"));
 	if (LightAttackMontageDataTableObject.Succeeded())
@@ -303,14 +296,14 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerInputComponent->BindAxis("LookUpRate", this, &APlayerCharacter::LookUpRate);
 
 	/**Setup the attacking Event*/
-	PlayerInputComponent->BindAction("Attack", IE_Pressed, this,  &APlayerCharacter::AttackInput);
-	//PlayerInputComponent->BindAction("Attack", IE_Released, this, &APlayerCharacter::AttackEnd);
+	PlayerInputComponent->BindAction("LightAttack", IE_Pressed, this,  &APlayerCharacter::LightAttack);
+	PlayerInputComponent->BindAction("HeavyAttack", IE_Pressed, this, &APlayerCharacter::HeavyAttack);
 
 	/**Setup pause event*/
 	PlayerInputComponent->BindAction("Pause", IE_Pressed, this, &APlayerCharacter::Pause);
 }
 
-void APlayerCharacter::AttackInput()
+void APlayerCharacter::AttackInput(EAttackType AttackType)
 {
 	if (GEngine)
 	{
@@ -359,6 +352,28 @@ void APlayerCharacter::AttackEnd()
 
 	SwordCollision->SetCollisionProfileName(MeleeAttackCollisionProfile.Desabled);
 	SwordCollision->SetNotifyRigidBodyCollision(false);
+}
+
+
+void APlayerCharacter::LightAttack()
+{
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Emerald, TEXT(__FUNCTION__));
+	}
+
+
+}
+
+
+void APlayerCharacter::HeavyAttack()
+{
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Emerald, TEXT(__FUNCTION__));
+	}
+
+
 }
 
 void APlayerCharacter::OnHitAttack(UPrimitiveComponent* HitComponent, AActor* OtherActor,
