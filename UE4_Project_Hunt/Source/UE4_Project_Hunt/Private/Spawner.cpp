@@ -47,12 +47,10 @@ void ASpawner::Spawner()
 	FRotator Rot;
 	FActorSpawnParameters SpawnParams;
 	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-	SpawnParams.bDeferConstruction = false;
+
 	Loc = GetActorLocation();
 
-	AActor* actor = GetWorld()->SpawnActor<AHuntAICharacter>(AICharacter, Loc, Rot, SpawnParams);
-
-	//AHuntAICharacter* EnemyChar =  GetWorld()->SpawnActor<AHuntAICharacter>(AICharacter->GetDefaultObject()->GetClass(), Loc, Rot, SpawnParams);
+	AHuntAICharacter* EnemyChar = GetWorld()->SpawnActor<AHuntAICharacter>(AICharacter->StaticClass(), Loc, Rot, SpawnParams);
 }
 
 void ASpawner::DisableActor()

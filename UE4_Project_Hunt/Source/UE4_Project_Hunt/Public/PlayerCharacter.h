@@ -53,6 +53,13 @@ struct FMeleeCollisionProfile
 
 };
 
+UENUM(BlueprintType)
+enum class EAttackType : uint8 {
+
+	MELEE_LIGHT       UMETA(DisplayName = "Melee - Light"),
+	MELEE_HEAVY       UMETA(DisplayName = "Melee - Heavy")
+};
+
 UCLASS()
 class UE4_PROJECT_HUNT_API APlayerCharacter : public ACharacter
 {
@@ -73,12 +80,17 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	/**Initialize Attack event*/
+	void LightAttack();
+	void HeavyAttack();
+
+	/**Initialize player Attack event*/
 	void AttackStart();
+
+	/**Stops player Attack event*/
 	void AttackEnd();
 	
 	/**Triggers attack animation based on user input*/
-	void AttackInput();
+	void AttackInput(EAttackType AttackType);
 
 	/**
 	* Triggered when the collision hit event fires between our weapon and enemy entities
@@ -94,10 +106,6 @@ public:
 	/**Initialize player camera*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera Sittings")
 	UCameraComponent* PlayerCamera;
-
-	/**Initialize animation montage calling*/
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Animation", meta = (AllowPrivateAcsess = "true"))
-	UAnimMontage* MeleeLightAttackAinmation;
 
 	/**Light Melee attack data table*/
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Animation", meta = (AllowPrivateAcsess = "true"))
@@ -222,6 +230,8 @@ private:
 
 	/**Call the contractor definition*/
 	FMeleeCollisionProfile MeleeAttackCollisionProfile;
+
+	EAttackType CurrentAttack;
 
 	/*
 	* this is for the damage function
