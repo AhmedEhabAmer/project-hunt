@@ -396,7 +396,7 @@ void APlayerCharacter::AttackStart()
 	}
 
 	SwordCollision->SetCollisionProfileName(MeleeAttackCollisionProfile.Enabled);
-	SwordCollision->SetNotifyRigidBodyCollision(true);
+	SwordCollision->SetNotifyRigidBodyCollision(false);
 }
 
 void APlayerCharacter::AttackEnd()
@@ -407,7 +407,7 @@ void APlayerCharacter::AttackEnd()
 	}
 
 	SwordCollision->SetCollisionProfileName(MeleeAttackCollisionProfile.Desabled);
-	SwordCollision->SetNotifyRigidBodyCollision(false);
+	SwordCollision->SetNotifyRigidBodyCollision(true);
 }
 
 
@@ -433,8 +433,4 @@ void APlayerCharacter::OnHitAttack(UPrimitiveComponent* HitComponent, AActor* Ot
 		}
 	}
 
-	if (AnimInstance)
-	{
-		AnimInstance->Montage_Stop(AnimationVariable, LightAttackMontage->MeleeLightAttackAinmation);
-	}
 }
