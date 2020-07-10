@@ -50,7 +50,7 @@ void AHuntAICharacter::SetDamageState()
 void AHuntAICharacter::DamageTimer()
 {
 	GetWorldTimerManager().SetTimer(DamageTimerHandle, this,
-	&AHuntAICharacter::SetDamageState, 0.1f, false);
+	&AHuntAICharacter::SetDamageState, 1.f, false);
 }
 
 float AHuntAICharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)

@@ -396,7 +396,8 @@ void APlayerCharacter::AttackStart()
 	}
 
 	SwordCollision->SetCollisionProfileName(MeleeAttackCollisionProfile.Enabled);
-	SwordCollision->SetNotifyRigidBodyCollision(false);
+	SwordCollision->SetNotifyRigidBodyCollision(true);
+	SetIsKeyboardEnabled(true);
 }
 
 void APlayerCharacter::AttackEnd()
@@ -407,7 +408,8 @@ void APlayerCharacter::AttackEnd()
 	}
 
 	SwordCollision->SetCollisionProfileName(MeleeAttackCollisionProfile.Desabled);
-	SwordCollision->SetNotifyRigidBodyCollision(true);
+	SwordCollision->SetNotifyRigidBodyCollision(false);
+	SetIsKeyboardEnabled(false);
 }
 
 
@@ -432,5 +434,4 @@ void APlayerCharacter::OnHitAttack(UPrimitiveComponent* HitComponent, AActor* Ot
 				Hit, nullptr, this, SwordDamage);
 		}
 	}
-
 }

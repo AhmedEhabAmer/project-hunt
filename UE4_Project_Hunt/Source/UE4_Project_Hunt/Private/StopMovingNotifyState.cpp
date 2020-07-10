@@ -11,15 +11,12 @@ UStopMovingNotifyState::UStopMovingNotifyState()
 
 void UStopMovingNotifyState::NotifyTick(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float FrameDeltaTime)
 {
-	if (MeshComp != NULL && MeshComp->GetOwner() != NULL)
-	{
-		APlayerCharacter* Player = Cast<APlayerCharacter>(MeshComp->GetOwner());
-		if (Player != NULL)
-		{
-			if (Player->GetCurrntAttack() == EAttackType::MELEE_SPECIAL)
-			{
-				Player->SetIsKeyboardEnabled(false);
-			}
-		}
-	}
+// 	if (MeshComp != NULL && MeshComp->GetOwner() != NULL)
+// 	{
+// 		APlayerCharacter* Player = Cast<APlayerCharacter>(MeshComp->GetOwner());
+// 		if (Player != NULL)
+// 		{
+// 			Player->SetIsKeyboardEnabled(false);
+// 		}
+// 	}
 }
