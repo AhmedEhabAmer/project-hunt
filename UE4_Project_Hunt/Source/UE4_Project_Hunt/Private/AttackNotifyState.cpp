@@ -24,7 +24,6 @@ void UAttackNotifyState::NotifyBegin(USkeletalMeshComponent * MeshComp, UAnimSeq
 		{
 			Player->AttackStart();
 		}
-
 	}
 }
 
@@ -35,13 +34,8 @@ void UAttackNotifyState::NotifyTick(USkeletalMeshComponent* MeshComp, UAnimSeque
 		APlayerCharacter* Player = Cast<APlayerCharacter>(MeshComp->GetOwner());
 		if (Player != NULL)
 		{
-			if (Player->GetCurrntAttack() == EAttackType::MELEE_SPECIAL)
-			{
-				Player->SetIsKeyboardEnabled(false);
-			}
-			
+			Player->SetIsKeyboardEnabled(false);
 		}
-
 	}
 }
 
