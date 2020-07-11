@@ -29,7 +29,7 @@ public:
 	void DisableActor();
 
 	UPROPERTY(EditDefaultsOnly, BluePrintReadOnly, Category = "Character To Spwan", meta = (AllowPrivateAccess = "true"))
-	AHuntAICharacter* AICharacter;
+	TSubclassOf<AHuntAICharacter> AICharacter;
 
 	UPROPERTY(EditDefaultsOnly, BluePrintReadOnly, Category = "Spanwer Mesh", meta = (AllowPrivateAcsess = "ture"))
 	UStaticMeshComponent* SpawnerMesh;

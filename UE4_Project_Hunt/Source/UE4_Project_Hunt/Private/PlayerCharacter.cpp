@@ -431,7 +431,7 @@ void APlayerCharacter::OnHitAttack(UPrimitiveComponent* HitComponent, AActor* Ot
 		if ((AIChar->bCanBeDamaged) != NULL) // check if AI can be damage or no 
 		{
 			UGameplayStatics::ApplyPointDamage(AIChar, LightAttackDamage, GetActorLocation(),
-				Hit, nullptr, this, SwordDamage);
+			Hit, nullptr, this, SwordDamage);
 		}
 	}
 }
