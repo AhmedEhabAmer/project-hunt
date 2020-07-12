@@ -5,6 +5,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "Components/BoxComponent.h"
 #include "HuntAICharacter.h"
+#include "TimerManager.h"
 
 // Sets default values
 ASpawner::ASpawner()
@@ -15,6 +16,8 @@ ASpawner::ASpawner()
 
   SpwanerCollison = CreateDefaultSubobject<UBoxComponent>("Spawner Collision");
   SpwanerCollison->SetupAttachment(SpawnerMesh);
+	
+  SpawnerTime = 1.f;
 }
 
 // Called when the game starts or when spawned
@@ -26,19 +29,28 @@ void ASpawner::BeginPlay()
 	{
 		DisableActor();
 	}
-	SpawnerCounter();
+	GetSpwanTime();
+}
+
+void ASpawner::GetSpwanTime()
+{
+	GetWorldTimerManager().SetTimer(SpwanTimerHandle, this, &ASpawner::SpawnerCounter, SpawnerTime, true);
 }
 
 void ASpawner::SpawnerCounter()
 {
-	TArray<int> EnemyCount;
-	EnemyCount.SetNum(10);
+ 	TArray<AHuntAICharacter*> EnemyCharacterCounter;
+	EnemyCharacterCounter.SetNum();
 
-	for (int i = 0; i != EnemyCount.Num(); ++i)
+	AHuntAICharacter* EnemyNum = Cast<AHuntAICharacter>(GetWorld()->GetNumPawns());
+
+
+	for (int i = 0; i != 1; ++i)
 	{
 		Spawner();
 		UE_LOG(LogTemp, Warning, TEXT("I'm Spwaning!"))
-	}
+	}	
+	
 }
 
 void ASpawner::Spawner()
