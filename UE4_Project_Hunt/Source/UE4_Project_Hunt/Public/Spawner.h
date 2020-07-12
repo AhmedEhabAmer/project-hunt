@@ -27,17 +27,27 @@ public:
 	void Spawner();
 	void SpawnerCounter();
 	void DisableActor();
+	void GetSpwanTime();
 
-	UPROPERTY(EditDefaultsOnly, BluePrintReadOnly, Category = "Character To Spwan", meta = (AllowPrivateAccess = "true"))
+	
+
+	FTimerHandle SpwanTimerHandle;
+
+	UPROPERTY(EditDefaultsOnly, BluePrintReadOnly, Category = "Character To Spawn", meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<AHuntAICharacter> AICharacter;
 
-	UPROPERTY(EditDefaultsOnly, BluePrintReadOnly, Category = "Spanwer Mesh", meta = (AllowPrivateAcsess = "ture"))
+	UPROPERTY(EditDefaultsOnly, BluePrintReadOnly, Category = "Spanwer Mesh", meta = (AllowPrivateAccess = "true"))
 	UStaticMeshComponent* SpawnerMesh;
 
-	UPROPERTY(EditDefaultsOnly, BluePrintReadOnly, Category = "Spanwer Mesh", meta = (AllowPrivateAcsess = "ture"))
+	UPROPERTY(EditDefaultsOnly, BluePrintReadOnly, Category = "Spanwer Mesh", meta = (AllowPrivateAccess = "true"))
 	UBoxComponent* SpwanerCollison;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Disable")
 	bool bHideInGame;
 	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Character To Spawn", meta = (AllowPrivateAccess = "true"))
+	float SpawnerTime;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Character To Spawn", meta = (AllowPrivateAccess = "true"))
+	int32 MaxEnemyInTheWorld;
 };
