@@ -16,7 +16,7 @@
 #include "Materials/MaterialInterface.h"
 #include "GamePlayController.h"
 #include "HuntAICharacter.h"
-
+#include "PlayerCharacterAnimInstance.h"
 
 // Sets default values
 APlayerCharacter::APlayerCharacter()
@@ -59,7 +59,7 @@ APlayerCharacter::APlayerCharacter()
 	Mousesensitivity = 1.f;
 
 	/**Initialize the sprint speed*/
-	SprintSpeedMultiplier = 1.f;
+	SprintSpeedMultiplier = 2.7f;
 
 	/**Initialize Light Damage*/
 	LightAttackDamage = 25.f;
@@ -221,12 +221,27 @@ void APlayerCharacter::MoveRight(float Value)
 /*Setup sprint*/
 void APlayerCharacter::SprintStart()
 {
-	GetCharacterMovement()->MaxWalkSpeed *= SprintSpeedMultiplier;
+	GetCharacterMovement()->MaxWalkSpeed = SprintSpeedMultiplier = 4.5f;
 }
 
 void APlayerCharacter::SprintEnd()
 {
-	GetCharacterMovement()->MaxWalkSpeed /= SprintSpeedMultiplier;
+	Jog();
+}
+
+void APlayerCharacter::Jog()
+{
+	GetCharacterMovement()->MaxWalkSpeed = SprintSpeedMultiplier = 2.7f;
+}
+
+void APlayerCharacter::WalkStart()
+{
+	GetCharacterMovement()->MaxWalkSpeed = SprintSpeedMultiplier = 1.7f;
+}
+
+void APlayerCharacter::WalkEnd()
+{
+	Jog();
 }
 
 /*
@@ -286,7 +301,11 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 	/**Setup sprint keys*/
 	PlayerInputComponent->BindAction("Sprint", IE_Pressed, this, &APlayerCharacter::SprintStart);
-	PlayerInputComponent->BindAction("Sprint", IE_Released, this, &APlayerCharacter::SprintEnd);
+	PlayerInputComponent->BindAction("Sprint", IE_Released, this, &APlayerCharacter::Jog);
+
+	/** Setup Walk Keys */
+	PlayerInputComponent->BindAction("WalkingAction", IE_Pressed, this, &APlayerCharacter::WalkStart);
+	PlayerInputComponent->BindAction("WalkingAction", IE_Released, this, &APlayerCharacter::Jog);
 
 	/**Setup all the Axis for the controller and the keyboard*/
 	PlayerInputComponent->BindAxis("Move Forward", this, &APlayerCharacter::MoveForward);

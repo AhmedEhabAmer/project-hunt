@@ -151,6 +151,9 @@ protected:
 	void TrunRate(float Value);
 	void SprintStart();
 	void SprintEnd();
+	void WalkStart();
+	void WalkEnd();
+	void Jog();
 
 	/**Pause Game Event*/
 	void PauseGame(bool bIsPaused);

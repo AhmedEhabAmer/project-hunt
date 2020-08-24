@@ -40,9 +40,9 @@ void ASpawner::GetSpwanTime()
 void ASpawner::SpawnerCounter()
 {
  	TArray<AHuntAICharacter*> EnemyCharacterCounter;
-	EnemyCharacterCounter.SetNum();
+	//EnemyCharacterCounter.SetNum();
 
-	AHuntAICharacter* EnemyNum = Cast<AHuntAICharacter>(GetWorld()->GetNumPawns());
+	//AHuntAICharacter* EnemyNum = Cast<AHuntAICharacter>(GetWorld()->GetNumPawns());
 
 
 	for (int i = 0; i != 1; ++i)
